@@ -23,7 +23,7 @@ public class Caloriecounter {
             System.out.println("Protein: " + foodInfo.getProtein());
             System.out.println("Carbohydrates: " + foodInfo.getCarbs());
         } else {
-            System.out.println("Food not found in the database.");
+            System.out.println("Food not found in the database. Would you like to add an item?");
         }
     }
 }
