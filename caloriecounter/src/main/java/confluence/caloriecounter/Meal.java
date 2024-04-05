@@ -8,6 +8,6 @@ package confluence.caloriecounter;
  *
  * @author Taj
  */
-public class Day {
+public class Meal {
     
 }
