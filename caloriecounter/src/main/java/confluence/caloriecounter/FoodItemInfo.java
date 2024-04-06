@@ -10,11 +10,12 @@ package confluence.caloriecounter;
      double protein;
      double calories;
      
-    public FoodItemInfo (double name, double protein, double calories){
+    public FoodItemInfo (double carbs, double protein, double calories){
         
         
         this.calories = calories;
         this.protein = protein;
+        this.carbs = carbs;
     }
 
     public double  getCalories() {

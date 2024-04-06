@@ -10,15 +10,15 @@ import java.util.HashMap;
 public class FoodDatabase {
 
     
-    public final HashMap<String, FoodItemInfo> FoodDatabase;
+    public final HashMap<String, FoodItemInfo> foodDatabase;
     
     public FoodDatabase(){
         
-        FoodDatabase = new HashMap<>();
-        FoodDatabase.put("Egg", new FoodItemInfo(1.1, 10.0, 5.0));
+        foodDatabase = new HashMap<>();
+        foodDatabase.put("Egg", new FoodItemInfo(1.1, 10.0, 5.0));
     }
     
     public FoodItemInfo getFoodItemInfo(String FoodName) {
-        return FoodDatabase.get(FoodName);
+        return foodDatabase.get(FoodName);
     }
 }
