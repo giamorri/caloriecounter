@@ -21,47 +21,47 @@ import java.util.Scanner;
 
 public class CollectionAndFileIO {
     public static void main(String[] args) {
-        Map<String, Integer> scoresMap = loadScoresFromFile();
+        Map<String, Integer> scoresMap = loadFoodsFromFile();
         
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.println("Enter student's first name (or 'x' to quit): ");
-            String name = scanner.nextLine().trim().toLowerCase();
+            System.out.println("Enter food's name (or 'x' to quit): ");
+            String foodName = scanner.nextLine().trim().toLowerCase();
             
-            if (name.equals("x")){
+            if (foodName.equals("x")){
                 break;
             }
-            System.out.println("Enter exam mark");
-            int mark = scanner.nextInt();
+            System.out.println("Enter food protein");
+            int protein = scanner.nextInt();
             scanner.nextLine();
             
-            if(scoresMap.containsKey(name)){
-                System.out.println("Record already exits for " + name + ".");
+            if(scoresMap.containsKey(foodName)){
+                System.out.println("Record already exits for " + foodName + ".");
                 System.out.println("Do you want to overwrite the record? (y/n):");
                 String choice = scanner.nextLine().trim().toLowerCase();
                 if (choice.equals("y")){
-                    scoresMap.put(name, mark);
+                    scoresMap.put(foodName, protein);
                     System.out.println("Record updated successfully.");
                 }
             } else {
-                scoresMap.put(name, mark);
+                scoresMap.put(foodName, protein);
                     System.out.println("Record added successfully.");
             }
             
-            saveScoresToFile(scoresMap);
+            saveFoodsToFile(scoresMap);
             System.out.println("Exiting program");
         }
     }
-        private static Map<String, Integer> loadScoresFromFile(){
+        private static Map<String, Integer> loadFoodsFromFile(){
             Map<String, Integer> scoresMap = new HashMap<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader("./resources/T02_scores.txt"))){
+            try (BufferedReader reader = new BufferedReader(new FileReader("./resources/FoodCustomDatabase.txt"))){
                 String line;
                 while ((line = reader.readLine()) != null){
                     String[] parts = line.split("\\s+");
                     if (parts.length == 2){
-                        String name = parts[0].trim().toLowerCase();
-                        int mark = Integer.parseInt(parts[1].trim());
-                        scoresMap.put(name, mark);
+                        String foodName = parts[0].trim().toLowerCase();
+                        int protein = Integer.parseInt(parts[1].trim());
+                        scoresMap.put(foodName, protein);
                     }
                 }
             }
@@ -70,14 +70,14 @@ public class CollectionAndFileIO {
                         }
                 return scoresMap;
             }
-            private static void saveScoresToFile(Map<String, Integer> scoresMap){
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/T02_score.txt"))){
+            private static void saveFoodsToFile(Map<String, Integer> scoresMap){
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("resources/FoodCustomDatabase.txt"))){
                     for (Map.Entry<String, Integer> entry : scoresMap.entrySet()) {
                 writer.write(entry.getKey() + " " + entry.getValue());
                 writer.newLine();
             }
         } catch (IOException e) {
-                System.out.println("Error saving scores to file: " + e.getMessage());
+                System.out.println("Error saving food item to file: " + e.getMessage());
         }
     }
 }

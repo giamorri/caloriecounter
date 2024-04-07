@@ -10,7 +10,7 @@ package confluence.caloriecounter;
  */
 import java.util.Scanner;
 
-public class Caloriecounter {
+public class CalorieCounter {
 
    //public static void main(String[] args) { <-- had to remove this so i can call it from the startmenu main
     public void FoodReader(){
@@ -24,14 +24,22 @@ public class Caloriecounter {
         
         FoodItemInfo foodInfo = macroDatabase.getFoodItemInfo(foodName);
         
-        
-        if (foodInfo != null) {
-            System.out.println("Food: " + foodName);
-            System.out.println("Protein: " + foodInfo.getProtein());
-            System.out.println("Carbohydrates: " + foodInfo.getCarbs());
-            System.out.println("Calories: " + foodInfo.getCalories());
-        } else {
-            System.out.println("Food not found in the database. Would you like to add an item?");
+        while (true) {
+            if ("x".equals(foodName) || "exit".equals(foodName)) {
+                System.out.println("No food entered...");
+            break;
+            }
+            else if (foodInfo != null) {
+                System.out.println("Food: " + foodName);
+                System.out.println("Protein: " + foodInfo.getProtein());
+                System.out.println("Carbohydrates: " + foodInfo.getCarbs());
+                System.out.println("Calories: " + foodInfo.getCalories());
+                break;
+            }
+            else {
+                System.out.println("Food not found in the database. Would you like to add an item?");
+                break;
+            }
         }
     }
 }
