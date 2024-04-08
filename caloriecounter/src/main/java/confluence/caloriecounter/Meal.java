@@ -9,5 +9,7 @@ package confluence.caloriecounter;
  * @author Taj
  */
 public class Meal {
-    
+    public void Meals(){
+        
+    }
 }

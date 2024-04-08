@@ -12,21 +12,29 @@ import java.util.Scanner;
 
 public class StartMenu {
     
-        Scanner menuScanner = new Scanner(System.in);
-        //Scanner foodScanner = new Scanner(System.in);
-        //Scanner continueOrExit = new Scanner(System.in);
-        String choice;
-
         //FoodDatabase foodDatabase = new FoodDatabase();
         CalorieCounter inputFood = new CalorieCounter();
         DayCounter newDay = new DayCounter();
         DayCounter today = new DayCounter();
         ExitProgram exit = new ExitProgram();
+        CalorieTarget showtarget = new CalorieTarget();
+        Meal sets = new Meal();
+        
+        
+    
+        Scanner menuScanner = new Scanner(System.in);
+        //Scanner foodScanner = new Scanner(System.in);
+        //Scanner continueOrExit = new Scanner(System.in);
+        String choice;
+
+        
         
     public static void main(String[] args) {
+        
+        
+        
         StartMenu startMenu = new StartMenu();
         startMenu.displayMenu();
-        
         
     }
 
@@ -66,8 +74,7 @@ public class StartMenu {
                     break;
                 //lets you change the target
                 case "ct":
-                    System.out.println("Your current target is #, what you like your new target to be?");
-                    
+                    showtarget.CalorieTarget();
                     System.out.println("Would you like to go back to the main menu?");
                     exit.exitProgram();
                     break;
@@ -81,7 +88,7 @@ public class StartMenu {
                 //lets you edit meal sets
                 case "ms":
                     System.out.println("Would you like to edit your breakfast, lunch or dinner?");
-                    
+                    sets.
                     System.out.println("\nWould you like to go back to the main menu?");
                     exit.exitProgram();
                     break;

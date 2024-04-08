@@ -9,7 +9,7 @@ package confluence.caloriecounter;
  * @author Taj
  */
 public class DayCounter {
-    int currentDay = 1;
+    int currentDay = 0;
     
     public void newDay(){
         currentDay = currentDay+1;
