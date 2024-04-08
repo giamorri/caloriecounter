@@ -88,7 +88,7 @@ public class StartMenu {
                 //lets you edit meal sets
                 case "ms":
                     System.out.println("Would you like to edit your breakfast, lunch or dinner?");
-                    sets.
+                   
                     System.out.println("\nWould you like to go back to the main menu?");
                     exit.exitProgram();
                     break;
