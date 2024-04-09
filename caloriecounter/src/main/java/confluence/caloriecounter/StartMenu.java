@@ -61,7 +61,7 @@ public class StartMenu {
                     //foodScanner.nextLine();
                     //FoodItemInfo eggMacros = foodDatabase.getFoodItemInfo("Egg");
                     //System.out.println("Egg");
-                    System.out.println("\nWould you like to go back to the main menu?");
+                    
                     exit.exitProgram();
                     break;
                 //continues the same day
@@ -98,6 +98,7 @@ public class StartMenu {
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
+                    
                     break;
             }
     }

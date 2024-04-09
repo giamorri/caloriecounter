@@ -21,4 +21,7 @@ public class FoodDatabase {
     public FoodItemInfo getFoodItemInfo(String FoodName) {
         return foodDatabase.get(FoodName);
     }
+    public void addFoodItem(String foodName, double protein, double carbs, double calories) {
+        foodDatabase.put(foodName, new FoodItemInfo(carbs, protein, calories));
+    }
 }
