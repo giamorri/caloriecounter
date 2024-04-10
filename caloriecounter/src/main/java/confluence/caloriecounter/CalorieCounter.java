@@ -41,27 +41,27 @@ public class CalorieCounter {
             System.out.println("Would you like to add this food item to the database? (yes/no)");
             String addFood = scanner.nextLine().toLowerCase();
             
-            if (addFood.equals("yes")) {
-                System.out.println("Enter the protein content (/100g):");
-                double protein = scanner.nextDouble();
-                scanner.nextLine(); 
-
-                System.out.println("Enter the carbohydrates content (/100g):");
-                double carbs = scanner.nextDouble();
-                scanner.nextLine(); 
-
-                System.out.println("Enter the calories content (/100g):");
-                double calories = scanner.nextDouble();
-                scanner.nextLine(); 
-
-                // Add the new food item to the database
-                macroDatabase.addFoodItem(foodName, protein, carbs, calories);
-                System.out.println("Food item added successfully.");
-            } else if (addFood.equals("no")) {
-                System.out.println("Food item not added to the database.");
-            } else {
-                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
-                continue;
+            switch (addFood) {
+                case "yes":
+                    System.out.println("Enter the protein content (/100g):");
+                    double protein = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Enter the carbohydrates content (/100g):");
+                    double carbs = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Enter the calories content (/100g):");
+                    double calories = scanner.nextDouble();
+                    scanner.nextLine();
+                    // Add the new food item to the database
+                    macroDatabase.addFoodItem(foodName, protein, carbs, calories);
+                    System.out.println("Food item added successfully.");
+                    break;
+                case "no":
+                    System.out.println("Food item not added to the database.");
+                    break;
+                default:
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    continue;
             }
             System.out.println("Press 'x' to exit, or press Enter to return to the main menu.");
             String exitChoice = scanner.nextLine();
