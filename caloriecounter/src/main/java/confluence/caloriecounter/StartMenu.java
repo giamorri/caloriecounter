@@ -18,7 +18,6 @@ public class StartMenu {
         DayCounter today = new DayCounter();
         ExitProgram exit = new ExitProgram();
         CalorieTarget showtarget = new CalorieTarget();
-        Meal sets = new Meal();
         
         
     
@@ -44,7 +43,7 @@ public class StartMenu {
             System.out.println("- start a new day (nd)");
             System.out.println("- continue day (cd)");
             System.out.println("- update calorie target (ct)");
-            System.out.println("- see a motivational quote (mq)");
+            System.out.println(" see a motivational quote (mq)");
             System.out.println("- edit existing meal sets (ms)");
             System.out.println("- exit the program (x)");
             System.out.println("Enter here:");
@@ -97,7 +96,7 @@ public class StartMenu {
                 case "x":
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a valid option.");
+                   System .out.println("Invalid choice. Please enter another item.");
                     
                     break;
             }

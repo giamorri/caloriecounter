@@ -33,7 +33,7 @@ public class FoodDatabase {
 
     // this is to save the food item to the file if its all good
     public void saveToFile(String foodName, double protein, double carbs, double calories) {
-        String FILE_PATH = "data.txt";
+        String FILE_PATH = "FoodDatabase.txt";
         
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(foodName + " " + protein+"(g)/100g" + " " + carbs +"(g)/100g"+ " " + calories+"kcal/100g");
