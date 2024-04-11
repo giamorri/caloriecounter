@@ -16,6 +16,6 @@ public class DayCounter {
         System.out.println("Starting a New Day, Today is day "+currentDay+".");
     }
     public void sameDay(){
-        System.out.println("Continuing Day, Today is day "+currentDay+".");
+        System.out.println("Good to see you!");
     }
 }

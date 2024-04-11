@@ -40,31 +40,26 @@ public class StartMenu {
     public void displayMenu() {
             System.out.println("Hello, today is day "+today.currentDay+" of Macro logging");
             System.out.println("What would you like to do?:");
+            System.out.println("input meal (im)");
             System.out.println("- start a new day (nd)");
-            System.out.println("- continue day (cd)");
             System.out.println("- update calorie target (ct)");
             System.out.println(" see a motivational quote (mq)");
             System.out.println("- edit existing meal sets (ms)");
+            System.out.println("- Finish day (fd)");
             System.out.println("- exit the program (x)");
             System.out.println("Enter here:");
             choice = menuScanner.nextLine();
             
             switch (choice) {
-                //starts a new day
-                case "nd":
-                    newDay.newDay();
-                    //System.out.println("You are entering food for day #.");
+                case "im":
+                    newDay.sameDay();
+                    //System.out.println("Continuing the day...");
                     inputFood.FoodReader();
-                    //need to run Calorie counter or macroDatabase(); from here but idk how
-                    //System.out.println("What did you have today?:");
-                    //foodScanner.nextLine();
-                    //FoodItemInfo eggMacros = foodDatabase.getFoodItemInfo("Egg");
-                    //System.out.println("Egg");
-                    
+                    System.out.println("\nWould you like to go back to the main menu?");
                     exit.exitProgram();
                     break;
-                //continues the same day
-                case "cd":
+                //add meas
+                case "nd":
                     newDay.sameDay();
                     //System.out.println("Continuing the day...");
                     inputFood.FoodReader();

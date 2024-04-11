@@ -1,6 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+
+ 
+ 
 
 package confluence.caloriecounter;
 
@@ -9,6 +9,7 @@ package confluence.caloriecounter;
  * @author Taj
  */
 import java.util.Scanner;
+
 
 public class CalorieCounter {
 
