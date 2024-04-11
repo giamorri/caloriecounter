@@ -13,21 +13,22 @@ import java.util.Scanner;
 public class ExitProgram {
     public void exitProgram(){
         
-        Scanner rando = new Scanner(System.in);
+        Scanner quit = new Scanner(System.in);
         Scanner exitScanner = new Scanner(System.in);
         String enter;
         String cont;
         StartMenu menu = new StartMenu();
         
-        
-        cont = rando.nextLine();
+        System.out.println("\nWould you like to go back to the main menu? (y/n)");
+        cont = quit.nextLine();
         while(true){
-                if ("x".equalsIgnoreCase(cont)||("exit".equalsIgnoreCase(cont))||("no".equalsIgnoreCase(cont))){
+            
+                if ("x".equalsIgnoreCase(cont)||("n".equalsIgnoreCase(cont))||("no".equalsIgnoreCase(cont))){
                     System.out.println("Goodbye!");
                     break;
                 }
                 else {
-                System.out.println("\nenter \"x\" or \"exit\" at any time to quit the program");
+                System.out.println("\nenter \"x\" at any time to quit the program");
                 System.out.println("press enter to continue");
                 enter = exitScanner.nextLine();
             

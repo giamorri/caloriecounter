@@ -8,8 +8,10 @@ package confluence.caloriecounter;
  *
  * @author Taj
  */
-public class Meal {
-    public void Meals(){
+public class EndDay {
+    public void endDay(){
+        
+            System.out.println("test test test");
         
     }
 }
