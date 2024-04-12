@@ -198,15 +198,15 @@ public class CalorieCounter {
                 break;
             }
             try{
-            searchInDay(foodName);
+            dayIO.searchInDay(foodName);
             } catch (Exception e) {
-            searchInDatabase(foodName);
+            dataIO.searchInDatabase(foodName);
                 System.out.println("test");
             }
             
-            boolean foundInDay = searchInDay(foodName);
+            boolean foundInDay = dayIO.searchInDay(foodName);
             if (!foundInDay){
-                searchInDatabase(foodName);
+                dataIO.searchInDatabase(foodName);
             }
             System.out.println("addtodatabase or not?");
             String addFood = scanner.nextLine().toLowerCase();
@@ -298,7 +298,7 @@ public class CalorieCounter {
             System.out.println("Error saving food item to file: " + e.getMessage());
         }
     }
-    public void searchInDay(String foodItem) {
+    public void dayIO.searchInDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -314,7 +314,7 @@ public class CalorieCounter {
                 }
             }
 //            if (!found) {
-//                searchInDatabase(foodName);
+//                dataIO.searchInDatabase(foodName);
 //                System.out.println("test");
 //                
 //            }
@@ -328,20 +328,17 @@ public class CalorieCounter {
 
     
 
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CalorieCounter {
+    
+    DatabaseIO dataIO = new DatabaseIO();
+    EatenTodayIO dayIO = new EatenTodayIO();
 
     Scanner scanner = new Scanner(System.in);
 
     public void foodReader() {
-        //FoodDatabase macroDatabase = new FoodDatabase();
+        FoodDatabase macroDatabase = new FoodDatabase();
 
         while (true) {
             System.out.println("What did you have today?");
@@ -353,12 +350,12 @@ public class CalorieCounter {
                 break;
             }
 
-            boolean foundInDay = searchInDay(foodName);
+            boolean foundInDay = dayIO.searchInDay(foodName);
             if (!foundInDay) {
-                searchInDatabase(foodName);
+                dataIO.searchInDatabase(foodName);
             }
 
-            System.out.println("Press 'x' to exit food logger, or any other key to add more food");
+            System.out.println("Enter 'x' to exit food logger, or any other key to add more food");
             String exitChoice = scanner.nextLine();
             if ("x".equalsIgnoreCase(exitChoice) || "exit".equalsIgnoreCase(exitChoice)) {
                 System.out.println("Exiting program...");
@@ -366,93 +363,11 @@ public class CalorieCounter {
             }
         }
     }
+    
+    
 
-    public boolean searchInDay(String foodItem) {
-        String FILE_PATH = "./resources/FoodEatenToday.csv";
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains(foodItem)) {
-                    System.out.println("Item already added to today's log: " + line);
-                    return true; // Item found in daily log
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
-        }
-        return false; // Item not found in daily log
-    }
 
-    public void searchInDatabase(String searchTerm) {
-        String FILE_PATH = "./resources/FoodDatabase.csv";
+ 
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            boolean found = false;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains(searchTerm)) {
-                    System.out.println("Found line in database: " + line);
-                    found = true;
-                    saveToDay(line);
-                    System.out.println("Would you like to update the macros of this item?");
-                    break;
-                }
-            }
-            if (!found) {
-                System.out.println("Food not found in the database.");
-                System.out.println("Would you like to add this food item to the database? (yes/no)");
-                String addFood = scanner.nextLine().toLowerCase();
-                if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-                    addFoodToDatabase(searchTerm);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
-        }
-    }
-
-    public void addFoodToDatabase(String foodName) {
-        try {
-            System.out.println("Enter the protein content (/100g):");
-            double protein = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
-            System.out.println("Enter the carbohydrates content (/100g):");
-            double carbs = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
-            System.out.println("Enter the calories content (/100g):");
-            double calories = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
-
-            FoodDatabase macroDatabase = new FoodDatabase();
-            macroDatabase.addFoodItem(foodName, protein, carbs, calories);
-            saveToDatabase(foodName, protein, carbs, calories);
-            System.out.println("Food item added successfully.");
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a number.");
-            scanner.nextLine(); // Consume newline
-        }
-    }
-
-    public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
-        String FILE_PATH = "./resources/FoodDatabase.csv";
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(foodName + " " + protein + "(g)/100g" + " " + carbs + "(g)/100g" + " " + calories + "kcal/100g");
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error saving food item to file: " + e.getMessage());
-        }
-    }
-
-    public void saveToDay(String foodItem) {
-        String FILE_PATH = "./resources/FoodEatenToday.csv";
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(foodItem);
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error saving food item to file: " + e.getMessage());
-        }
-    }
 }
