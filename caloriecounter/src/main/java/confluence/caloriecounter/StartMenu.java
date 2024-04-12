@@ -11,57 +11,40 @@ package confluence.caloriecounter;
 import java.util.Scanner;
 
 public class StartMenu {
+    private CalorieTracker calorieTracker;
+   private Scanner menuScanner = new Scanner(System.in);
+    private CalorieCounter inputFood;
+    private ExitProgram exit = new ExitProgram();
+    private EndDay end = new EndDay();
     
     
-    //need to read existing txt or csv file before running program, if(there is no txt file) then(make a new txt file)
-       // try{
-        //todo
-        //check for exisiting file
-        //IF file exisits
-        //DO
-        ///open file with exisiting calories
-        ///read contents of files and store as objects in new runtime
-        //if file does not exist goto catch
-      
-       // }catch{
-        //put this in a try catch
-        //no log file exists, start a new instance
-        //}
-        //FoodDatabase foodDatabase = new FoodDatabase();
-        CalorieCounter inputFood = new CalorieCounter();
-        DayCounter newDay = new DayCounter();
-        DayCounter today = new DayCounter();
-        ExitProgram exit = new ExitProgram();
-        CalorieTarget showtarget = new CalorieTarget();
-        EndDay end = new EndDay();
     
-        Scanner menuScanner = new Scanner(System.in);
-        //Scanner foodScanner = new Scanner(System.in);
-        //Scanner continueOrExit = new Scanner(System.in);
-        String choice;
-
+    
+    
+    public StartMenu() {
+        int[] targets = TargetReader.loadMacroTargets();
+        this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
         
-        
+        System.out.println("Loaded targets: Calories = " + targets[0] + ", Protein = " + targets[1] + "g, Carbs = " + targets[2] + "g");
+    }
+  
     public static void main(String[] args) {
-        
-        
-        
+    
         StartMenu startMenu = new StartMenu();
         startMenu.displayMenu();
         
     }
 
     public void displayMenu() {
-            System.out.println("Hello, today is day "+today.currentDay+" of Macro logging");
+            
             System.out.println("What would you like to do?:");
             menuOptions();
             menuChoice();
     }
     public void menuOptions(){
             System.out.println("- open food logger (fl)");
-            //System.out.println("input meal (im)");
-            //System.out.println("- start a new day (nd)");
-            System.out.println("- update calorie target (ct)");
+            System.out.println("- update macro targets (mt)");
+            System.out.println("- see remaining calories (rc)");
             System.out.println("- see a motivational quote (mq)");
             System.out.println("- edit existing meal sets (ms)");
             System.out.println("- Finish day (fd)");
@@ -69,66 +52,61 @@ public class StartMenu {
             System.out.println("Enter here:");
     }
     public void menuChoice(){
-        choice = menuScanner.nextLine();
+        String choice = menuScanner.nextLine();
         
         switch (choice) {
-//                case "im":
-//                    newDay.sameDay();
-//                    //System.out.println("Continuing the day...");
-//                    inputFood.FoodReader();
-//                    System.out.println("\nWould you like to go back to the main menu?");
-//                    exit.exitProgram();
-//                    break;
-//                //add meas
-//                case "nd":
-//                    newDay.sameDay();
-//                    //System.out.println("Continuing the day...");
-//                    inputFood.FoodReader();
-//                    System.out.println("\nWould you like to go back to the main menu?");
-//                    exit.exitProgram();
-//                    break;
-                case "fl":
-                    newDay.sameDay();
-                    //System.out.println("Continuing the day...");
-                    inputFood.FoodReader();
-                    exit.exitProgram();
-                    break;
-                //lets you change the target
-                case "ct":
-                    showtarget.CalorieTarget();
-                    System.out.println("Would you like to go back to the main menu?");
-                    exit.exitProgram();
-                    break;
-                //gives a motivational quote
-                case "mq":
-                    System.out.println("~You must look within yourself to save yourself from your other self~");
-                    System.out.println("          ~only then will your true self reveal itself~");
-                    System.out.println("\nWould you like to go back to the main menu?");
-                    exit.exitProgram();
-                    break;
-                //lets you edit meal sets
-                case "ms":
-                    System.out.println("Would you like to edit your breakfast, lunch or dinner?");
-                   
-                    System.out.println("\nWould you like to go back to the main menu?");
-                    exit.exitProgram();
-                    break;
-                case "fd":
-                    System.out.println("Do you wish to end the day and view the foods from today? (y/n)");
-                    end.endDay();
-                    break;
-                //exits the program
-                case "exit":
-                case "x":
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please enter another item.");
-                    menuChoice();
-                    break;
+            case "fl":
+                inputFood.FoodReader();
+                break;
+            case "mt":
+                    System.out.println("Current Macro Targets: ");
+                    calorieTracker.ShowFullMacros();
+                    System.out.println("Enter new targets for Calories, Protein (g), Carbs (g) separated by commas (e.g., 1200, 200, 50):");
+
+                    String[] inputs = menuScanner.nextLine().trim().split("\\s*,\\s*"); // to  split the input on commas and trims any whitespace
+                    if (inputs.length == 3) { // to make sure only 3 numbers are put in
+                try {
+                    int newCalories = Integer.parseInt(inputs[0]);
+                    int newProtein = Integer.parseInt(inputs[1]);
+                    int newCarbs = Integer.parseInt(inputs[2]);
                     
+                    calorieTracker.updateTargets(newCalories, newProtein, newCarbs);
+                   
+                    
+                    this.calorieTracker = new CalorieTracker(newCalories, newProtein, newCarbs);
+                    System.out.println("New targets set: Calories = " + newCalories + ", Protein = " + newProtein + "g, Carbs = " + newCarbs + "g");
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter the numbers properly separated by commas.");
+                }
+                } else {
+                System.out.println("Please enter exactly three numbers separated by commas.");
+                }
+                    System.out.println("Press any key to return to the main menu...");
+                    menuScanner.nextLine(); // This just waits for the user to press any key
+                    displayMenu();
+                break;
+            case "mq":
+                System.out.println("~You must look within yourself to save yourself from your other self~");
+                System.out.println("          ~only then will your true self reveal itself~");
+                break;
+            case "ms":
+                System.out.println("Would you like to edit your breakfast, lunch or dinner?");
+                // no Implementation for editing meal sets
+                break;
+            case "fd":
+                System.out.println("Do you wish to end the day and view the foods from today? (y/n)");
+                if (menuScanner.nextLine().trim().equalsIgnoreCase("y")) {
+                    end.endDay();
+                    calorieTracker.ShowFullMacros();
+                }
+                break;
+            case "exit":
+            case "x":
+                exit.exitProgram(); 
+                return; 
+            default:
+                System.out.println("Invalid choice. Please enter another item:");
+                break;
         }
-        
-        menuScanner.close();
-        //foodScanner.close();
     }
 }

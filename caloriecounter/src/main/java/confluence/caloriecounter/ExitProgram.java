@@ -18,7 +18,7 @@ public class ExitProgram {
         String enter;
         String cont;
         StartMenu menu = new StartMenu();
-        
+       
         System.out.println("\nWould you like to go back to the main menu? (y/n)");
         cont = quit.nextLine();
         while(true){

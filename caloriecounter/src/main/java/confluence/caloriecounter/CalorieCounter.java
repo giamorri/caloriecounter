@@ -183,7 +183,14 @@ import java.util.Scanner;
 public class CalorieCounter {
 
     Scanner scanner = new Scanner(System.in);
+     private CalorieTracker calorieTracker;
     
+    
+     
+    public void addFood(String foodName, int calories) {
+        this.calorieTracker.addCalories(calories);
+        System.out.println("Added " + foodName + " with " + calories + " calories.");
+    }
     public void FoodReader() {
         //StartMenu menu = new StartMenu();
         FoodDatabase macroDatabase = new FoodDatabase();
