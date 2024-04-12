@@ -25,7 +25,7 @@ public static void saveMacroTargets(int calorieTarget, int proteinTarget, int ca
             fileWriter.append(String.valueOf(carbsTarget)).append("\n");
             fileWriter.flush();
         } catch (IOException e) {
-            System.out.println("Failed to save macro targets: " + e.getMessage());
+            System.out.println("Try Again! check the commas between values are present. ");
         }
     }
 
@@ -40,7 +40,7 @@ public static void saveMacroTargets(int calorieTarget, int proteinTarget, int ca
                     return new int[]{ Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]) };
                 }
             } catch (IOException | NumberFormatException e) {
-                System.out.println("Could not load saved targets: " + e.getMessage());
+                System.out.println("Check the formatting and try again ");
             }
         }
         // Defaults if there is issues with the file reading or writing

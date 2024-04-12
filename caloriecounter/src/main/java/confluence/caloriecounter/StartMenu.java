@@ -15,7 +15,7 @@ public class StartMenu {
    private Scanner menuScanner = new Scanner(System.in);
     private CalorieCounter inputFood;
     private ExitProgram exit = new ExitProgram();
-    private EndDay end = new EndDay();
+  
     
     
     
@@ -24,7 +24,7 @@ public class StartMenu {
     public StartMenu() {
         int[] targets = TargetReader.loadMacroTargets();
         this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
-        
+        this.inputFood = new CalorieCounter(); 
         System.out.println("Loaded targets: Calories = " + targets[0] + ", Protein = " + targets[1] + "g, Carbs = " + targets[2] + "g");
     }
   
@@ -47,10 +47,12 @@ public class StartMenu {
             System.out.println("- see remaining calories (rc)");
             System.out.println("- see a motivational quote (mq)");
             System.out.println("- edit existing meal sets (ms)");
-            System.out.println("- Finish day (fd)");
+            System.out.println("- show day summary(ds)");
             System.out.println("- exit the program (x)");
             System.out.println("Enter here:");
     }
+   
+    
     public void menuChoice(){
         String choice = menuScanner.nextLine();
         
@@ -94,9 +96,10 @@ public class StartMenu {
                 // no Implementation for editing meal sets
                 break;
             case "fd":
+                
                 System.out.println("Do you wish to end the day and view the foods from today? (y/n)");
                 if (menuScanner.nextLine().trim().equalsIgnoreCase("y")) {
-                    end.endDay();
+                    
                     calorieTracker.ShowFullMacros();
                 }
                 break;
