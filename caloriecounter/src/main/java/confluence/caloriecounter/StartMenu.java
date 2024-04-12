@@ -75,7 +75,7 @@ public class StartMenu {
 //                case "im":
 //                    newDay.sameDay();
 //                    //System.out.println("Continuing the day...");
-//                    inputFood.FoodReader();
+//                    inputFood.foodReader();
 //                    System.out.println("\nWould you like to go back to the main menu?");
 //                    exit.exitProgram();
 //                    break;
@@ -83,14 +83,14 @@ public class StartMenu {
 //                case "nd":
 //                    newDay.sameDay();
 //                    //System.out.println("Continuing the day...");
-//                    inputFood.FoodReader();
+//                    inputFood.foodReader();
 //                    System.out.println("\nWould you like to go back to the main menu?");
 //                    exit.exitProgram();
 //                    break;
                 case "fl":
                     newDay.sameDay();
                     //System.out.println("Continuing the day...");
-                    inputFood.FoodReader();
+                    inputFood.foodReader();
                     exit.exitProgram();
                     break;
                 //lets you change the target
@@ -109,7 +109,7 @@ public class StartMenu {
                 //lets you edit meal sets
                 case "ms":
                     System.out.println("Would you like to edit your breakfast, lunch or dinner?");
-                   
+                   //doesnt do anything yet
                     System.out.println("\nWould you like to go back to the main menu?");
                     exit.exitProgram();
                     break;
