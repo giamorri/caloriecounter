@@ -338,6 +338,7 @@ public class CalorieCounter {
     Scanner scanner = new Scanner(System.in);
 
     public void foodReader() {
+        // -> need to see if this is needed here 
         FoodDatabase macroDatabase = new FoodDatabase();
 
         while (true) {

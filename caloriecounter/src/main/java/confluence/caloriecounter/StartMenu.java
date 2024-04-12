@@ -17,7 +17,6 @@ public class StartMenu {
         //DayCounter today = new DayCounter(); <-- no more day counter
         ExitProgram exit = new ExitProgram();
         CalorieTarget showtarget = new CalorieTarget();
-        EndDay end = new EndDay();
     
         Scanner menuScanner = new Scanner(System.in);
         String choice;
@@ -75,12 +74,6 @@ public class StartMenu {
                     break;
                 case "sum":
                     System.out.println("heres a summary of todays food:");
-                    
-                //ends the day and shows summary of food from the day
-                case "fin":
-                    System.out.println("Do you wish to end the day and view the foods from today? (y/n)");
-                    end.endDay();
-                    break;
                 //exits the program
                 case "exit":
                 case "x":
