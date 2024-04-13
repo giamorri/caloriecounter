@@ -21,75 +21,6 @@ public class DatabaseIO {
     EatenTodayIO day = new EatenTodayIO();
     Scanner scanner = new Scanner(System.in);
     
-//    public void searchInDatabase(String searchTerm) {
-//            
-//            
-//        String FILE_PATH = "./resources/FoodDatabase.csv";
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-//            String line;
-//            boolean found = false;
-//            while ((line = reader.readLine()) != null) {
-//                if (line.contains(searchTerm)) {
-//                    System.out.println("Found line in database: " + line);
-//                    found = true;
-//                    day.saveToDay(line);
-//                    System.out.println("Would you like to update the macros of this item?");
-//                    break;
-//                }
-//            }
-//            if (!found) {
-//                System.out.println("Food not found in the database.");
-//                System.out.println("Would you like to add this food item to the database? (y/n)");
-//                String addFood = scanner.nextLine().toLowerCase();
-//                if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-//                    addFoodToDatabase(searchTerm);
-//                }
-//                else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
-//                    System.out.println("food item not added");
-//                }
-//            }
-//        } catch (IOException e) {
-//            System.out.println("Error reading from file: " + e.getMessage());
-//            // ------> need to figure out how to make this work addFoodToDatabase();
-//        }
-//    }
-//    public void searchInDatabase(String searchTerm) {
-//
-//        String FILE_PATH = "./resources/FoodDatabase.csv";
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-//            String line;
-//            boolean found = false;
-//            while ((line = reader.readLine()) != null) {
-//                if (line.contains(searchTerm)) {
-//                    System.out.println("Found line in database: " + line);
-//                    found = true;
-//                    day.saveToDay(line);
-//                    break;
-//                }
-//            }
-//            if (!found) {
-//                System.out.println("Food not found in the database.");
-//                System.out.println("Would you like to add this food item to the database? (y/n)");
-//                String addFood = scanner.nextLine().toLowerCase();
-//                if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-//                    addFoodToDatabase(searchTerm);
-//                } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
-//                    System.out.println("Food item not added.");
-//                }
-//            }
-//        } catch (IOException e) {
-//            System.out.println("Error reading from file: " + e.getMessage());
-//            System.out.println("An error occurred while reading the database. Would you like to add this food item to the database? (y/n)");
-//            String addFood = scanner.nextLine().toLowerCase();
-//            if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-//                addFoodToDatabase(searchTerm);
-//            } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
-//                System.out.println("Food item not added.");
-//            }
-//        }
-//        }
     public void searchInDatabase(String searchTerm) {
     String FILE_PATH = "./resources/FoodDatabase.csv";
 
@@ -133,6 +64,67 @@ public class DatabaseIO {
         }
     }
 }
+    /*public void searchInDatabase(String searchTerm) {
+    String FILE_PATH = "./resources/FoodDatabase.csv";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        String line;
+        boolean found = false;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains(searchTerm)) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    String foodName = parts[0];
+                    double proteinPer100g = Double.parseDouble(parts[1]);
+                    double carbsPer100g = Double.parseDouble(parts[2]);
+                    double caloriesPer100g = Double.parseDouble(parts[3]);
+                    
+                    System.out.println("Found line in database: " + formatOutput(foodName, proteinPer100g, carbsPer100g, caloriesPer100g));
+                    found = true;
+                    
+                    System.out.println("Enter the amount of grams consumed:");
+                    double gramsConsumed = scanner.nextDouble();
+                    scanner.nextLine(); // Consume newline
+                    
+                    // Calculate adjusted macronutrients
+                    double protein = (proteinPer100g * gramsConsumed) / 100;
+                    double carbs = (carbsPer100g * gramsConsumed) / 100;
+                    double calories = (caloriesPer100g * gramsConsumed) / 100;
+                    
+                    // Display adjusted macronutrients
+                    System.out.println("Adjusted macronutrients based on " + gramsConsumed + " grams consumed:");
+                    System.out.println("Protein: " + protein + "g");
+                    System.out.println("Carbs: " + carbs + "g");
+                    System.out.println("Calories: " + calories + "kcal");
+                    
+                    day.saveToDay(foodName + "," + protein + "," + carbs + "," + calories);
+                    System.out.println("Would you like to update the macros of this item?");
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("Food not found in the database.");
+            System.out.println("Would you like to add this food item to the database? (y/n)");
+            String addFood = scanner.nextLine().toLowerCase();
+            if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
+                addFoodToDatabase(searchTerm);
+            } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
+                System.out.println("Food item not added.");
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        System.out.println("Error reading from file: " + e.getMessage());
+        System.out.println("An error occurred while reading the database. Would you like to add this food item to the database? (y/n)");
+        String addFood = scanner.nextLine().toLowerCase();
+        if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
+            addFoodToDatabase(searchTerm);
+        } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
+            System.out.println("Food item not added.");
+        }
+    }
+}
+*/
 
 private String formatOutput(String foodName, double protein, double carbs, double calories) {
     return foodName + ", protein: " + protein + "g, carbs: " + carbs + "g, calories: " + calories + "kcal";

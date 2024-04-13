@@ -50,7 +50,7 @@ public class EatenTodayIO {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.contains(foodItem)) {
-                    System.out.println("Item already added today: " + formatOutput(line));
+                    System.out.println("Item already added today: \n- " + formatOutput(line));
                     return true; // Item found in daily log
                 }
             }
@@ -79,7 +79,7 @@ public class EatenTodayIO {
             double protein = Double.parseDouble(parts[1]);
             double carbs = Double.parseDouble(parts[2]);
             double calories = Double.parseDouble(parts[3]);
-            return foodName + ", protein: " + protein + "g, carbs: " + carbs + "g, calories: " + calories + "kcal";
+            return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
         }
         return line; // Return original line if unable to parse
     }

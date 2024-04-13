@@ -28,9 +28,13 @@ public class CalorieCounter {
             String foodInput = scanner.nextLine().toLowerCase().trim();
             String foodName = foodInput.replaceAll("[^a-zA-Z]", "");
 
-            if ("x".equalsIgnoreCase(foodName) || "exit".equalsIgnoreCase(foodName) || "".equalsIgnoreCase(foodName)) {
+            if ("x".equalsIgnoreCase(foodName) || "exit".equalsIgnoreCase(foodName)) {
                 System.out.println("No food entered...");
                 break;
+            }
+            else if ("".equalsIgnoreCase(foodName)){
+                System.out.println("please enter food name:");
+                foodReader();
             }
 
             boolean foundInDay = dayIO.searchInDay(foodName);
@@ -38,7 +42,7 @@ public class CalorieCounter {
                 dataIO.searchInDatabase(foodName);
             }
 
-            System.out.println("Enter 'x' to exit food logger, or any other key to add more food");
+            System.out.println("Enter 'x' to exit food logger, \nor any other key to add more food");
             String exitChoice = scanner.nextLine();
             if ("x".equalsIgnoreCase(exitChoice) || "exit".equalsIgnoreCase(exitChoice)) {
                 System.out.println("Exiting program...");
