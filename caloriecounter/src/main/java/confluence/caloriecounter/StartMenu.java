@@ -59,7 +59,7 @@ public class StartMenu {
         
         switch (choice) {
             case "fl":
-                inputFood.FoodReader();
+                inputFood.foodReader();
                 break;
             case "mt":
                     UpdateTarget.updateTargets(); 
