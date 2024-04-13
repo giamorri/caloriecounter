@@ -58,6 +58,11 @@ public class StartMenu {
         String choice = menuScanner.nextLine();
         
         switch (choice) {
+            case "rc":{
+                
+                calorieTracker.ShowFullMacros();
+  
+            }
             case "fl":
                 inputFood.foodReader();
                 break;
