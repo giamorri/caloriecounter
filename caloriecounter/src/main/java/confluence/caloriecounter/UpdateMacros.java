@@ -36,7 +36,7 @@ public class UpdateMacros {
                     
                     calorieTracker.updateTargets(newCalories, newProtein, newCarbs);
                     System.out.println("New targets set: Calories = " + newCalories + ", Protein = " + newProtein + "g, Carbs = " + newCarbs + "g");
-                    validInput = true; // Set to true to exit loop
+                    validInput = true; 
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input. Please enter the numbers properly separated by commas.");
                 }
