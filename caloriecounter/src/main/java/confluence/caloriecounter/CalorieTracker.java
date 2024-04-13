@@ -1,7 +1,5 @@
 package confluence.caloriecounter;
 
-import java.util.Scanner;
-
 public class CalorieTracker {
     private int calorieTarget; 
     private int consumedCalories = 0;
@@ -16,10 +14,9 @@ public class CalorieTracker {
         this.proteinTarget = targets[1];
         this.carbsTarget = targets[2];
         this.consumedCalories = 0;
-        this.proteinTarget = proteinTarget;
-        this.carbsTarget = carbsTarget;
+    //    this.proteinTarget = proteinTarget;
+    //    this.carbsTarget = carbsTarget;
     }
-
     public int getCalorieTarget() {
         return calorieTarget;
     }
