@@ -336,10 +336,15 @@ public class CalorieCounter {
     EatenTodayIO dayIO = new EatenTodayIO();
 
     Scanner scanner = new Scanner(System.in);
+    
+    private CalorieTracker calorieTracker;
 
+    public void addFood(String foodName, int calories) {
+        this.calorieTracker.addCalories(calories);
+        System.out.println("Added " + foodName + " with " + calories + " calories.");
+    }
     public void foodReader() {
-        // -> need to see if this is needed here 
-        FoodDatabase macroDatabase = new FoodDatabase();
+        // -> need to see if this is needed here FoodDatabase macroDatabase = new FoodDatabase();
 
         while (true) {
             System.out.println("What did you have today?");
