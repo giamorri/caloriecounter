@@ -46,7 +46,6 @@ public class StartMenu {
             System.out.println("- update macro targets (mt)");
             System.out.println("- see remaining calories (rc)");
             System.out.println("- see a motivational quote (mq)");
-            System.out.println("- edit existing meal sets (ms)");
             System.out.println("- show day summary(ds)");
             System.out.println("- exit the program (x)");
             System.out.println("Enter here:");
@@ -58,7 +57,7 @@ public class StartMenu {
         
         switch (choice) {
             case "fl":
-                inputFood.FoodReader();
+                inputFood.foodReader();
                 break;
             case "mt":
                     System.out.println("Current Macro Targets: ");
@@ -91,17 +90,9 @@ public class StartMenu {
                 System.out.println("~You must look within yourself to save yourself from your other self~");
                 System.out.println("          ~only then will your true self reveal itself~");
                 break;
-            case "ms":
-                System.out.println("Would you like to edit your breakfast, lunch or dinner?");
-                // no Implementation for editing meal sets
-                break;
-            case "fd":
-                
-                System.out.println("Do you wish to end the day and view the foods from today? (y/n)");
-                if (menuScanner.nextLine().trim().equalsIgnoreCase("y")) {
-                    
+            
+            case "ds":
                     calorieTracker.ShowFullMacros();
-                }
                 break;
             case "exit":
             case "x":

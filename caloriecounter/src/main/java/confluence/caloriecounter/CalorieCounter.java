@@ -344,7 +344,7 @@ public class CalorieCounter {
         System.out.println("Added " + foodName + " with " + calories + " calories.");
     }
     public void foodReader() {
-        // -> need to see if this is needed here FoodDatabase macroDatabase = new FoodDatabase();
+    FoodDatabase macroDatabase = new FoodDatabase();
 
         while (true) {
             System.out.println("What did you have today?");
