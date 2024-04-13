@@ -4,9 +4,6 @@
  */
 package confluence.caloriecounter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,17 +32,7 @@ public class FoodDatabase {
         }
     
 
-    // this is to save the food item to the file if its all good
-    public void saveToFile(String foodName, double protein, double carbs, double calories) {
-        String FILE_PATH = "./resources/FoodDatabase.txt";
-        
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(foodName + " " + protein+"(g)/100g" + " " + carbs +"(g)/100g"+ " " + calories+"kcal/100g");
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error saving food item to file: " + e.getMessage());
-        }
-    }
+
 }
 //need a bufferReader
 

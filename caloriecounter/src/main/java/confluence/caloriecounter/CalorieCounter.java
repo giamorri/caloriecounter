@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
 public class CalorieCounter {
 
    //public static void main(String[] args) { <-- had to remove this so i can call it from the startmenu main
-    public void FoodReader() {
+    public void foodReader() {
         
         StartMenu menu = new StartMenu();
         FoodDatabase macroDatabase = new FoodDatabase();
@@ -72,7 +72,7 @@ public class CalorieCounter {
                             System.out.println("Would you like to try again? (y/n)");
                             yesorno = scanner.nextLine().toLowerCase();
                             if ("y".equalsIgnoreCase(yesorno)){ 
-                                FoodReader(); 
+                                foodReader(); 
                             } else if ("n".equalsIgnoreCase(yesorno)){
                                 break; 
                             }
@@ -90,7 +90,7 @@ public class CalorieCounter {
                     System.out.println("Exiting program...");
                     break;
                 } else {
-                    FoodReader(); 
+                    foodReader(); 
                 }
             }
         }
@@ -103,7 +103,7 @@ import java.util.InputMismatchException;
 
 public class CalorieCounter {
 
-    public void FoodReader() {
+    public void foodReader() {
         
         StartMenu menu = new StartMenu();
         FoodDatabase macroDatabase = new FoodDatabase();
@@ -170,7 +170,7 @@ public class CalorieCounter {
         }
     }
 }
-*/
+//skmfdlksfdfsfsdfsfds
         
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -183,16 +183,8 @@ import java.util.Scanner;
 public class CalorieCounter {
 
     Scanner scanner = new Scanner(System.in);
-     private CalorieTracker calorieTracker;
     
-    
-     
-    public void addFood(String foodName, int calories) {
-        this.calorieTracker.addCalories(calories);
-        System.out.println("Added " + foodName + " with " + calories + " calories.");
-    }
-    public void FoodReader() {
-        //StartMenu menu = new StartMenu();
+    public void foodReader() {
         FoodDatabase macroDatabase = new FoodDatabase();
         
 
@@ -205,53 +197,54 @@ public class CalorieCounter {
                 System.out.println("No food entered...");
                 break;
             }
+            try{
+            dayIO.searchInDay(foodName);
+            } catch (Exception e) {
+            dataIO.searchInDatabase(foodName);
+                System.out.println("test");
+            }
+            
+            boolean foundInDay = dayIO.searchInDay(foodName);
+            if (!foundInDay){
+                dataIO.searchInDatabase(foodName);
+            }
+            System.out.println("addtodatabase or not?");
+            String addFood = scanner.nextLine().toLowerCase();
 
-            //FoodItemInfo foodInfo = macroDatabase.getFoodItemInfo(foodName);
-            searchInDatabase(foodName);
-// need to change this if else thing so that the macros are read from the csv file instead of the fooditeminfo class
- /*           if (foodInfo != null) {
-                System.out.println("Food: " + foodName);
-                System.out.println("Protein: " + foodInfo.getProtein());
-                System.out.println("Carbohydrates: " + foodInfo.getCarbs());
-                System.out.println("Calories: " + foodInfo.getCalories());
-            } else {
-                System.out.println("Food not found in the database.");
-                System.out.println("Would you like to add this food item to the database? (yes/no)");
-*/              String addFood = scanner.nextLine().toLowerCase();
-
-                switch (addFood) {
-                    case "yes":
-                    case "y":
-                        boolean validInput = false;
-                        while (!validInput) {
-                            try {
-                                System.out.println("Enter the protein content (/100g):");
-                                double protein = scanner.nextDouble();
-                                scanner.nextLine(); // consume newline
-                                System.out.println("Enter the carbohydrates content (/100g):");
-                                double carbs = scanner.nextDouble();
-                                scanner.nextLine(); // consume newline
-                                System.out.println("Enter the calories content (/100g):");
-                                double calories = scanner.nextDouble();
-                                scanner.nextLine(); // consume newline
-                                macroDatabase.addFoodItem(foodName, protein, carbs, calories);
-                                saveToDatabase(foodName, protein, carbs, calories); // Call saveToFile method
-                                System.out.println("Food item added successfully.");
-                                validInput = true;
-                            } catch (InputMismatchException e) {
-                                System.out.println("Invalid input. Please enter a number.");
-                                scanner.nextLine(); // consume newline
-                            }
+            switch (addFood) {
+                case "yes":
+                case "y":
+                    boolean validInput = false;
+                    while (!validInput) {
+                        try {
+                            System.out.println("Enter the protein content (/100g):");
+                            double protein = scanner.nextDouble();
+                            scanner.nextLine(); // consume newline
+                            System.out.println("Enter the carbohydrates content (/100g):");
+                            double carbs = scanner.nextDouble();
+                            scanner.nextLine(); // consume newline
+                            System.out.println("Enter the calories content (/100g):");
+                            double calories = scanner.nextDouble();
+                            scanner.nextLine(); // consume newline
+                            macroDatabase.addFoodItem(foodName, protein, carbs, calories);
+                            saveToDatabase(foodName, protein, carbs, calories); // Call saveToFile method
+                            System.out.println("Food item added successfully.");
+                            validInput = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.nextLine(); // consume newline
                         }
-                        break;
-                    case "no":
-                    case "n":
-                        System.out.println("Food item not added to the database.");
-                        break;
-                    default:
-                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
-                        break;
-                }
+                    }
+                    break;
+                case "no":
+                case "n":
+                case "x":
+                    System.out.println("Food item not added to the database.");
+                    break;
+                default:
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    break;
+            }
         
             System.out.println("Press 'x' to exit food logger, or any other key to add more food");
             String exitChoice = scanner.nextLine();
@@ -305,10 +298,82 @@ public class CalorieCounter {
             System.out.println("Error saving food item to file: " + e.getMessage());
         }
     }
+    public void dayIO.searchInDay(String foodItem) {
+        String FILE_PATH = "./resources/FoodEatenToday.csv";
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            boolean found = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(foodItem)) {
+                    System.out.println("Found line: " + line);
+                    found = true;
+                    saveToDay(line);
+                    System.out.println("Item already added to day");
+                    foodReader();
+                }
+            }
+//            if (!found) {
+//                dataIO.searchInDatabase(foodName);
+//                System.out.println("test");
+//                
+//            }
+        } catch (IOException e) {
+           System.out.println("Error reading from file: " + e.getMessage());
+        }
+    }
 }
 
-    
+*/    
 
     
 
+import java.util.Scanner;
+
+public class CalorieCounter {
+    
+    DatabaseIO dataIO = new DatabaseIO();
+    EatenTodayIO dayIO = new EatenTodayIO();
+
+    Scanner scanner = new Scanner(System.in);
+    
+    private CalorieTracker calorieTracker;
+
+    public void addFood(String foodName, int calories) {
+        this.calorieTracker.addCalories(calories);
+        System.out.println("Added " + foodName + " with " + calories + " calories.");
+    }
+    public void foodReader() {
+    FoodDatabase macroDatabase = new FoodDatabase();
+
+        while (true) {
+            System.out.println("What did you have today?");
+            String foodInput = scanner.nextLine().toLowerCase().trim();
+            String foodName = foodInput.replaceAll("[^a-zA-Z]", "");
+
+            if ("x".equalsIgnoreCase(foodName) || "exit".equalsIgnoreCase(foodName) || "".equalsIgnoreCase(foodName)) {
+                System.out.println("No food entered...");
+                break;
+            }
+
+            boolean foundInDay = dayIO.searchInDay(foodName);
+            if (!foundInDay) {
+                dataIO.searchInDatabase(foodName);
+            }
+
+            System.out.println("Enter 'x' to exit food logger, or any other key to add more food");
+            String exitChoice = scanner.nextLine();
+            if ("x".equalsIgnoreCase(exitChoice) || "exit".equalsIgnoreCase(exitChoice)) {
+                System.out.println("Exiting program...");
+                break;
+            }
+        }
+    }
+    
+    
+
+
+
+ 
+
+}
