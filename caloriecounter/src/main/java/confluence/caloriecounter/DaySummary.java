@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DaySummary {
+    
     private Map<String, Map<String, Double>> foodItems = new HashMap<>();
     private Map<String, Double> totalMacros = new HashMap<>();
 
@@ -42,6 +43,7 @@ public class DaySummary {
         System.out.println("Error reading file: " + e.getMessage());
     }
 }
+    
 
     private void processLine(String line) {
         String[] parts = line.split(",");

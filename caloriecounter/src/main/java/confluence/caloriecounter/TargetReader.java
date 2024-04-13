@@ -15,9 +15,9 @@ import java.io.IOException;
  * @author Taj
  */
 public class TargetReader {
- private static final String FILE_NAME = "MacroTargets.csv";  
+    private static final String FILE_NAME = "./resources/MacroTargets.csv";  
  
-public static void saveMacroTargets(int calorieTarget, int proteinTarget, int carbsTarget) {
+    public static void saveMacroTargets(int calorieTarget, int proteinTarget, int carbsTarget) {
         try (FileWriter fileWriter = new FileWriter(FILE_NAME, false)) {
             fileWriter.append("Calories,Protein,Carbs\n");
             fileWriter.append(String.valueOf(calorieTarget)).append(",");
@@ -29,7 +29,7 @@ public static void saveMacroTargets(int calorieTarget, int proteinTarget, int ca
         }
     }
 
- public static int[] loadMacroTargets() {
+    public static int[] loadMacroTargets() {
         File file = new File(FILE_NAME);
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -44,7 +44,7 @@ public static void saveMacroTargets(int calorieTarget, int proteinTarget, int ca
             }
         }
         // Defaults if there is issues with the file reading or writing
-        System.out.println("Defaulting to 2000 calories, 150g protein, 300g carbs");
+        //System.out.println("Default is 2000 calories, 150g protein, 300g carbs");
         return new int[]{ 2000, 150, 300 };
     }
 }

@@ -1,7 +1,5 @@
 package confluence.caloriecounter;
 
-import java.util.Scanner;
-
 public class CalorieTracker {
     private int calorieTarget; 
     private int consumedCalories = 0;
@@ -25,7 +23,7 @@ public class CalorieTracker {
     }
     public void addCalories(int calories) {
         consumedCalories += calories;
-         System.out.println(calories + " calories added. Total consumed: " + consumedCalories);
+         System.out.println(calories + " calories added. total eaten: " + consumedCalories);
  
     }
     public void addProtein(int protein) {
@@ -65,9 +63,9 @@ public int getRemainingCarbs() {
 }
     
     public void ShowFullMacros() {
-        System.out.println("Calorie intake: " + consumedCalories + "/" + calorieTarget + " kcal");
-        System.out.println("Protein intake: " + consumedProtein + "/" + proteinTarget + " g");
-        System.out.println("Carbs intake: " + consumedCarbs + "/" + carbsTarget + " g");
+        System.out.println("calorie intake: " + consumedCalories + "/" + calorieTarget + " kcal");
+        System.out.println("crotein intake: " + consumedProtein + "/" + proteinTarget + " g");
+        System.out.println("carbs intake: " + consumedCarbs + "/" + carbsTarget + " g");
     }
     
 }

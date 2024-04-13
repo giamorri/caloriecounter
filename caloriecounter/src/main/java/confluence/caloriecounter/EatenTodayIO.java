@@ -24,7 +24,7 @@ public class EatenTodayIO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+            System.out.println("Food not in database");
         }
         return false; // Item not found in daily log
     }
