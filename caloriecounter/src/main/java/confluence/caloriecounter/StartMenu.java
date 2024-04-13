@@ -15,6 +15,7 @@ public class StartMenu {
    private Scanner menuScanner = new Scanner(System.in);
     private CalorieCounter inputFood;
     private ExitProgram exit = new ExitProgram();
+    private UpdateMacros UpdateTarget; 
   
     
     
@@ -25,6 +26,7 @@ public class StartMenu {
         int[] targets = TargetReader.loadMacroTargets();
         this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
         this.inputFood = new CalorieCounter(); 
+        this.UpdateTarget = new UpdateMacros(calorieTracker, menuScanner);
         System.out.println("Loaded targets: Calories = " + targets[0] + ", Protein = " + targets[1] + "g, Carbs = " + targets[2] + "g");
     }
   
@@ -58,34 +60,12 @@ public class StartMenu {
         
         switch (choice) {
             case "fl":
-                inputFood.FoodReader();
+                inputFood.foodReader();
                 break;
             case "mt":
-                    System.out.println("Current Macro Targets: ");
-                    calorieTracker.ShowFullMacros();
-                    System.out.println("Enter new targets for Calories, Protein (g), Carbs (g) separated by commas (e.g., 1200, 200, 50):");
-
-                    String[] inputs = menuScanner.nextLine().trim().split("\\s*,\\s*"); // to  split the input on commas and trims any whitespace
-                    if (inputs.length == 3) { // to make sure only 3 numbers are put in
-                try {
-                    int newCalories = Integer.parseInt(inputs[0]);
-                    int newProtein = Integer.parseInt(inputs[1]);
-                    int newCarbs = Integer.parseInt(inputs[2]);
+                    UpdateTarget.updateTargets(); 
+                displayMenu(); 
                     
-                    calorieTracker.updateTargets(newCalories, newProtein, newCarbs);
-                   
-                    
-                    this.calorieTracker = new CalorieTracker(newCalories, newProtein, newCarbs);
-                    System.out.println("New targets set: Calories = " + newCalories + ", Protein = " + newProtein + "g, Carbs = " + newCarbs + "g");
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter the numbers properly separated by commas.");
-                }
-                } else {
-                System.out.println("Please enter exactly three numbers separated by commas.");
-                }
-                    System.out.println("Press any key to return to the main menu...");
-                    menuScanner.nextLine(); // This just waits for the user to press any key
-                    displayMenu();
                 break;
             case "mq":
                 System.out.println("~You must look within yourself to save yourself from your other self~");
