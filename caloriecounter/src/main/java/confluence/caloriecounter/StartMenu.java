@@ -11,11 +11,12 @@ package confluence.caloriecounter;
 import java.util.Scanner;
 
 public class StartMenu {
-    private CalorieTracker calorieTracker;
-   private Scanner menuScanner = new Scanner(System.in);
+   private CalorieTracker calorieTracker;
+    private Scanner menuScanner = new Scanner(System.in);
     private CalorieCounter inputFood;
     private ExitProgram exit = new ExitProgram();
     private UpdateMacros UpdateTarget; 
+    private DaySummary daySummary = new DaySummary(); 
   
     
     
@@ -25,9 +26,8 @@ public class StartMenu {
     public StartMenu() {
         int[] targets = TargetReader.loadMacroTargets();
         this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
-        this.inputFood = new CalorieCounter(); 
+        this.inputFood = new CalorieCounter(calorieTracker); // Initialize with CalorieTracker
         this.UpdateTarget = new UpdateMacros(calorieTracker, menuScanner);
-        System.out.println("Loaded targets: Calories = " + targets[0] + ", Protein = " + targets[1] + "g, Carbs = " + targets[2] + "g");
     }
   
     public static void main(String[] args) {
@@ -36,6 +36,13 @@ public class StartMenu {
         startMenu.displayMenu();
         
     }
+    public void showRemainingMacros() {
+    int remainingProtein = calorieTracker.getRemainingProtein();
+    int remainingCarbs = calorieTracker.getRemainingCarbs();
+
+    System.out.println("Remaining protein for the day: " + remainingProtein + "g");
+    System.out.println("Remaining carbs for the day: " + remainingCarbs + "g");
+}
 
     public void displayMenu() {
             
@@ -46,7 +53,7 @@ public class StartMenu {
     public void menuOptions(){
             System.out.println("- open food logger (fl)");
             System.out.println("- update macro targets (mt)");
-            System.out.println("- see remaining calories (rc)");
+            System.out.println("- see remaining macros (rc)");
             System.out.println("- see a motivational quote (mq)");
             System.out.println("- show day summary(ds)");
             System.out.println("- exit the program (x)");
@@ -58,31 +65,42 @@ public class StartMenu {
         String choice = menuScanner.nextLine();
         
         switch (choice) {
-            case "rc":{
+            case "rc":
                 
                 calorieTracker.ShowFullMacros();
-  
-            }
+                showRemainingMacros();
+                exit.exitProgram();
+                break;
+      
             case "fl":
                 inputFood.foodReader();
+                
                 break;
             case "mt":
                     UpdateTarget.updateTargets(); 
+                  
+
                 displayMenu(); 
                     
                 break;
             case "mq":
                 System.out.println("~You must look within yourself to save yourself from your other self~");
                 System.out.println("          ~only then will your true self reveal itself~");
+                exit.exitProgram();
                 break;
             
             case "ds":
-                    calorieTracker.ShowFullMacros();
+                daySummary.readFoodData("./resources/FoodEatenToday.csv");
+                    daySummary.displayDaySummary();
+                    
+                 exit.exitProgram();
+
                 break;
             case "exit":
             case "x":
-                exit.exitProgram(); 
-                return; 
+                
+                break;
+                 
             default:
                 System.out.println("Invalid choice. Please enter another item:");
                 break;

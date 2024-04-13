@@ -79,12 +79,12 @@ public class DatabaseIO {
                     double carbsPer100g = Double.parseDouble(parts[2]);
                     double caloriesPer100g = Double.parseDouble(parts[3]);
                     
-                    System.out.println("Found line in database: " + formatOutput(foodName, proteinPer100g, carbsPer100g, caloriesPer100g));
+                    System.out.println("Found item in database: \n- " + formatOutput(foodName, proteinPer100g, carbsPer100g, caloriesPer100g));
                     found = true;
                     
-                    System.out.println("Enter the amount of grams consumed:");
+                    System.out.println("How much of this (in grams) did you have?");
                     double gramsConsumed = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine();
                     
                     // Calculate adjusted macronutrients
                     double protein = (proteinPer100g * gramsConsumed) / 100;
@@ -115,7 +115,7 @@ public class DatabaseIO {
         }
     } catch (IOException | NumberFormatException e) {
         System.out.println("Error reading from file: " + e.getMessage());
-        System.out.println("An error occurred while reading the database. Would you like to add this food item to the database? (y/n)");
+        System.out.println("Would you like to add this food item to the database? (y/n)");
         String addFood = scanner.nextLine().toLowerCase();
         if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
             addFoodToDatabase(searchTerm);
@@ -149,20 +149,25 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
                     saveToDatabase(foodName, protein, carbs, calories);
                     System.out.println("Food item added successfully.");
                 } catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter a number.");
-                    addFoodToDatabase(foodName);
-                    //scanner.nextLine(); // Consume newline
-        }
-    }
+                    System.out.println("The input must be a number. try again? (y/n)");
+                    scanner.nextLine();
+                    String again = scanner.nextLine();
+                    if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
+                        addFoodToDatabase(foodName);
+                    } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
+                        System.out.println("Food item not added.");
+                    }
+                }
+            }
                public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
-        String FILE_PATH = "./resources/FoodDatabase.csv";
+            String FILE_PATH = "./resources/FoodDatabase.csv";
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(foodName + "," + protein + "," + carbs + "," + calories);
             writer.newLine();
-        } catch (IOException e) {
+            } catch (IOException e) {
             System.out.println("Error saving food item to file: " + e.getMessage());
+            }
         }
-    }
 
-}
+    }
