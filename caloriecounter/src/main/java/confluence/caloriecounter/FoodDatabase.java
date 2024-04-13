@@ -11,9 +11,7 @@ import java.util.Objects;
 public class FoodDatabase {
     private final Map<String, FoodItemInfo> foodDatabase = new HashMap<>();
 
-    //public FoodDatabase() {
-    //    foodDatabase.put("Egg", new FoodItemInfo(1.1, 10.0, 5.0));
-    //}
+    
 
     public FoodItemInfo getFoodItemInfo(String foodName) {
         return foodDatabase.get(foodName);

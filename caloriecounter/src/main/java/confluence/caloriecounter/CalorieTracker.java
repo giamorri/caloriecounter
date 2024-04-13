@@ -40,6 +40,13 @@ public class CalorieTracker {
     public int getRemainingCalories() {
         return calorieTarget - consumedCalories;
     }
+    public int getRemainingProtein() {
+    return proteinTarget - consumedProtein;
+}
+
+public int getRemainingCarbs() {
+    return carbsTarget - consumedCarbs;
+}
     public void resetCalories() {
         consumedCalories = 0;
     }

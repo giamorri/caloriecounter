@@ -12,4 +12,16 @@
         <exec.mainClass>confluence.caloriecounter.StartMenu</exec.mainClass>
     </properties>
     <name>Caloriecounter</name>
+<build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.csv</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
