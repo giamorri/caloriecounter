@@ -21,7 +21,7 @@ public class DatabaseIO {
     EatenTodayIO day = new EatenTodayIO();
     Scanner scanner = new Scanner(System.in);
     
-    public void searchInDatabase(String searchTerm) {
+    /*public void searchInDatabase(String searchTerm) {
     String FILE_PATH = "./resources/FoodDatabase.csv";
 
     try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -55,7 +55,7 @@ public class DatabaseIO {
         }
     } catch (IOException | NumberFormatException e) {
         System.out.println("Error reading from file: " + e.getMessage());
-        System.out.println("An error occurred while reading the database. Would you like to add this food item to the database? (y/n)");
+        System.out.println("Would you like to add this food item to the database? (y/n)");
         String addFood = scanner.nextLine().toLowerCase();
         if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
             addFoodToDatabase(searchTerm);
@@ -63,8 +63,8 @@ public class DatabaseIO {
             System.out.println("Food item not added.");
         }
     }
-}
-    /*public void searchInDatabase(String searchTerm) {
+}*/
+    public void searchInDatabase(String searchTerm) {
     String FILE_PATH = "./resources/FoodDatabase.csv";
 
     try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -124,10 +124,10 @@ public class DatabaseIO {
         }
     }
 }
-*/
+
 
 private String formatOutput(String foodName, double protein, double carbs, double calories) {
-    return foodName + ", protein: " + protein + "g, carbs: " + carbs + "g, calories: " + calories + "kcal";
+    return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
 }
 
 
@@ -150,7 +150,8 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
                     System.out.println("Food item added successfully.");
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input. Please enter a number.");
-                    scanner.nextLine(); // Consume newline
+                    addFoodToDatabase(foodName);
+                    //scanner.nextLine(); // Consume newline
         }
     }
                public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
