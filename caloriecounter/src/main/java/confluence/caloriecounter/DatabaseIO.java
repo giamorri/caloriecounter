@@ -43,16 +43,16 @@ public class DatabaseIO {
                     found = true;
                     
                     System.out.println("how much of this (in grams) did you have?");
-                    double gramsConsumed = scanner.nextDouble();
+                    double gramsEaten = scanner.nextDouble();
                     scanner.nextLine();
                     
                     // Calculate adjusted macronutrients
-                    double protein = (proteinPer100g * gramsConsumed) / 100;
-                    double carbs = (carbsPer100g * gramsConsumed) / 100;
-                    double calories = (caloriesPer100g * gramsConsumed) / 100;
+                    double protein = (proteinPer100g * gramsEaten) / 100;
+                    double carbs = (carbsPer100g * gramsEaten) / 100;
+                    double calories = (caloriesPer100g * gramsEaten) / 100;
                     
                     // Display adjusted macronutrients
-                    System.out.println("changed macros based on " + gramsConsumed + " grams eaten:");
+                    System.out.println("changed macros based on " + gramsEaten + " grams eaten:");
                     System.out.println("protein: " + protein + "g");
                     System.out.println("carbs: " + carbs + "g");
                     System.out.println("calories: " + calories + "kcal");
@@ -64,8 +64,10 @@ public class DatabaseIO {
         }
         if (!found) {
             System.out.println(searchTerm+" not found in the database.");
+            
             System.out.println("do you want to add "+searchTerm+" to the database? (y/n)");
             String addFood = scanner.nextLine().toLowerCase();
+            
             if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
                 addFoodToDatabase(searchTerm);
             } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
@@ -75,6 +77,7 @@ public class DatabaseIO {
     } catch (IOException | NumberFormatException e) {
         System.out.println("do you want to add "+searchTerm+" to the database? (y/n)");
         String addFood = scanner.nextLine().toLowerCase();
+        
         if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
             addFoodToDatabase(searchTerm);
         } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
@@ -94,23 +97,28 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
                 try {
                     System.out.println("enter the protein content (/100g):");
                     double protein = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextDouble();
+                    
                     System.out.println("enter the carbohydrates content (/100g):");
                     double carbs = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextDouble();
+                    
                     System.out.println("enter the calories content (/100g):");
                     double calories = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextDouble();
 
                     FoodDatabase macroDatabase = new FoodDatabase();
                     macroDatabase.addFoodItem(foodName, protein, carbs, calories);
                     saveToDatabase(foodName, protein, carbs, calories);
+                    
                     System.out.println("food item added successfully.");
                     searchInDatabase(foodName);
+                    
                 } catch (InputMismatchException e) {
                     System.out.println("the input must be a number. try again? (y/n)");
                     scanner.nextLine();
                     String again = scanner.nextLine();
+                    
                     if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
                         addFoodToDatabase(foodName);
                     } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {

@@ -81,7 +81,7 @@ public class StartMenu {
                 break;
             
             case "ds":
-                
+                daySummary.readFoodData("./resources/FoodEatenToday.csv");
                 daySummary.displayDaySummary();
                 exit.exitProgram();
                 break;
