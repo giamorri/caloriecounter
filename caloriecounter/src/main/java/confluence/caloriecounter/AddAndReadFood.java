@@ -47,8 +47,6 @@ public class AddAndReadFood {
             if (!foundInDay) {
                 dataIO.searchInDatabase(foodName);
             }
-            System.out.println(" ");
-            scanner.nextLine();
             System.out.println("enter 'x' to exit to main menu, or any other key to add more food");
             String exitChoice = scanner.nextLine();
             if ("x".equalsIgnoreCase(exitChoice) || "exit".equalsIgnoreCase(exitChoice)) {

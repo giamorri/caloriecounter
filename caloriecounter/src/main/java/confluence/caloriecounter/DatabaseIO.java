@@ -43,15 +43,16 @@ public class DatabaseIO {
                             break;
                             
                         } catch (InputMismatchException e) {
-                            System.out.println("please enter just a number.");
-                            // Provide user an option to retry input or go back
-//                            System.out.println("Do you want to try again? (y/n)");
-//                            String retry = inputScanner.nextLine();
-//                            inputScanner.nextLine();
-                            return;
-//                            if (!retry.equalsIgnoreCase("y")) {
-//                                return; // Exit method if user chooses not to retry
-//                            }
+                            System.out.println("the input must be a number. try again? (y/n)");
+                            inputScanner.nextLine();
+                            String again = inputScanner.nextLine();
+                    
+                            if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
+                            searchInDatabase(foodName);
+                            } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
+                                System.out.println("food item not added.");
+                    }
+                
                         } catch (IllegalStateException e) {
                             System.out.println("Scanner is closed. Please restart the application.");
                             return; // Exit method if scanner is closed
