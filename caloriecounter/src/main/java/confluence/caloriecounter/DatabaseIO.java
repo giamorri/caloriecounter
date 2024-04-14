@@ -21,6 +21,49 @@ public class DatabaseIO {
     EatenTodayIO day = new EatenTodayIO();
     Scanner inputScanner = new Scanner(System.in);
     
+//this calls the FoodDatabase class to add new food items to the FoodDatabase.csv file  
+                public void addFoodToDatabase(String foodName) {
+                try {
+                    System.out.println("enter the protein (/100g):");
+                    double protein = inputScanner.nextDouble();
+                    
+                    System.out.println("enter the carbohydrates (/100g):");
+                    double carbs = inputScanner.nextDouble();
+                    
+                    System.out.println("enter the calories (/100g):");
+                    double calories = inputScanner.nextDouble();
+
+                    
+                    FoodDatabase macroDatabase = new FoodDatabase();
+                    macroDatabase.addFoodItem(foodName, protein, carbs, calories);
+                    saveToDatabase(foodName, protein, carbs, calories);
+                    
+                    System.out.println("food item added successfully.");
+                    searchInDatabase(foodName);
+                    
+                } catch (InputMismatchException e) {
+                    System.out.println("the input must be a number. try again? (y/n)");
+                    inputScanner.nextLine();
+                    String again = inputScanner.nextLine();
+                    
+                    if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
+                        addFoodToDatabase(foodName);
+                    } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
+                        System.out.println("food item not added.");
+                    }
+                }
+            }
+            public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
+                String FILE_PATH = "./resources/FoodDatabase.csv";
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+                    writer.write(foodName + "," + protein + "," + carbs + "," + calories);
+                    writer.newLine();
+                } catch (IOException e) {
+                    System.out.println("Try Again");
+                }
+            }
+    
     //reads FoodDatabase.csv and looks for the line containing the search term the user says. 
     //it splits the line into parts then prints out the nutritional information depending on how many grams they had.
     public void searchInDatabase(String searchTerm) {
@@ -114,48 +157,5 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
     return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
 }
 
-
-        
-            public void addFoodToDatabase(String foodName) {
-                try {
-                    System.out.println("enter the protein (/100g):");
-                    double protein = inputScanner.nextDouble();
-                    
-                    System.out.println("enter the carbohydrates (/100g):");
-                    double carbs = inputScanner.nextDouble();
-                    
-                    System.out.println("enter the calories (/100g):");
-                    double calories = inputScanner.nextDouble();
-
-                    
-                    FoodDatabase macroDatabase = new FoodDatabase();
-                    macroDatabase.addFoodItem(foodName, protein, carbs, calories);
-                    saveToDatabase(foodName, protein, carbs, calories);
-                    
-                    System.out.println("food item added successfully.");
-                    searchInDatabase(foodName);
-                    
-                } catch (InputMismatchException e) {
-                    System.out.println("the input must be a number. try again? (y/n)");
-                    inputScanner.nextLine();
-                    String again = inputScanner.nextLine();
-                    
-                    if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
-                        addFoodToDatabase(foodName);
-                    } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
-                        System.out.println("food item not added.");
-                    }
-                }
-            }
-            public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
-                String FILE_PATH = "./resources/FoodDatabase.csv";
-
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-                    writer.write(foodName + "," + protein + "," + carbs + "," + calories);
-                    writer.newLine();
-                } catch (IOException e) {
-                    System.out.println("Try Again");
-                }
-            }
 
     }
