@@ -75,8 +75,7 @@ public class StartMenu {
                 exit.exitProgram();
                 break;
                 
-           
-      
+
             case "mq":
                 System.out.println("~You must look within yourself to save yourself from your other self~");
                 System.out.println("          ~only then will your true self reveal itself~");

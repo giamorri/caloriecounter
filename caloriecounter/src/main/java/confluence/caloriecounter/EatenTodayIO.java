@@ -4,6 +4,10 @@
  */
 package confluence.caloriecounter;
 
+/**
+ *
+ * @author yash
+ */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -12,7 +16,7 @@ import java.io.IOException;
 
 
 public class EatenTodayIO {
-    //search for a specific food item in the FoodEatenToday.csv file
+//search for a specific food item in the FoodEatenToday.csv file
     public boolean searchInDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 
@@ -21,7 +25,7 @@ public class EatenTodayIO {
             while ((line = reader.readLine()) != null) {
                 if (line.contains(foodItem)) {
                     System.out.println("Item already added today: \n- " + formatOutput(line));
-                    return true; // Item found in daily log
+                    return true;
                 }
             }
         } catch (IOException e) {
@@ -29,7 +33,7 @@ public class EatenTodayIO {
         }
         return false; 
     }
-//save  to a specific food item in the FoodEatenToday.csv file
+//save a specific food item to the FoodEatenToday.csv file
     public void saveToDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 
@@ -37,7 +41,7 @@ public class EatenTodayIO {
             writer.write(foodItem);
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("Error saving food item to file: " + e.getMessage());
+            System.out.println("Ahhhhhhhhh didnt work (has to work) ");
         }
     }
 
@@ -62,7 +66,7 @@ public class EatenTodayIO {
             fileWriter.close();  
             System.out.println("Food log cleared successfully.");
         } catch (IOException e) {
-            System.out.println("Error clearing food log: " + e.getMessage());
+            System.out.println("try again!");
         }
     }
 }

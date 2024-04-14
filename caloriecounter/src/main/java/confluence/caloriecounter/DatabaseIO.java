@@ -4,6 +4,10 @@
  */
 package confluence.caloriecounter;
 
+/**
+ *
+ * @author yash
+ */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -57,7 +61,7 @@ public class DatabaseIO {
                 
                         } catch (IllegalStateException e) {
                             System.out.println("Scanner is closed. Please restart the application.");
-                            return; // Exit method if scanner is closed
+                            return;
                         }
                     }
                 }
@@ -116,16 +120,14 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
                 try {
                     System.out.println("enter the protein (/100g):");
                     double protein = inputScanner.nextDouble();
-                    //inputScanner.nextDouble();
                     
                     System.out.println("enter the carbohydrates (/100g):");
                     double carbs = inputScanner.nextDouble();
-                    //inputScanner.nextDouble();
                     
                     System.out.println("enter the calories (/100g):");
                     double calories = inputScanner.nextDouble();
-                    //inputScanner.nextDouble();
 
+                    
                     FoodDatabase macroDatabase = new FoodDatabase();
                     macroDatabase.addFoodItem(foodName, protein, carbs, calories);
                     saveToDatabase(foodName, protein, carbs, calories);
