@@ -31,7 +31,7 @@ public class AddAndReadFood {
         System.out.println("added " + foodName + " with " + calories + " calories, " + protein + "g of protein, " + carbs + "g of carbs.");
     }
     public void foodReader() {
-    //FoodDatabase macroDatabase = new FoodDatabase();
+   
 
         while (true) {
             System.out.println("what did you eat today?");
