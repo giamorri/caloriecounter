@@ -43,8 +43,7 @@ public class TargetReader {
                 System.out.println("Check the formatting and try again ");
             }
         }
-        // Defaults if there is issues with the file reading or writing
-        //System.out.println("Default is 2000 calories, 150g protein, 300g carbs");
+        
         return new int[]{ 2000, 150, 300 };
     }
 }

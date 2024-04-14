@@ -12,6 +12,7 @@ import java.io.IOException;
 
 
 public class EatenTodayIO {
+    //search for a specific food item in the FoodEatenToday.csv file
     public boolean searchInDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 
@@ -28,7 +29,7 @@ public class EatenTodayIO {
         }
         return false; // Item not found in daily log
     }
-
+//save  to a specific food item in the FoodEatenToday.csv file
     public void saveToDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 

@@ -25,6 +25,7 @@ public class DaySummary {
     ExitProgram exit;
     StartMenu menu;
 
+    //this is for reading the data from our FoodEatenToday.csv 
     public void readFoodData(String filePath) {
         
         File file = new File(filePath);
@@ -49,7 +50,7 @@ public class DaySummary {
             }
         }
     }
-
+    //this is to parse the information into the FoodEatenToday.cssv file by splitting at ','
     private void processLine(String line) {
         String[] parts = line.split(",");
         

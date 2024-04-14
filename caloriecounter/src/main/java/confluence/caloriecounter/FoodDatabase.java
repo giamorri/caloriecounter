@@ -21,10 +21,9 @@ public class FoodDatabase {
     public void addFoodItem(String foodName, double protein, double carbs, double calories) {
         if (Objects.nonNull(foodName) && !foodName.trim().isEmpty() && protein >= 0 && carbs >= 0 && calories >= 0) {
             foodDatabase.put(foodName, new FoodItemInfo(protein, carbs, calories));
-            //System.out.println("food item data added successfully.");
+           
         }
-          //else...  //throw new IllegalArgumentException("Invalid food item data");
-                     //System.out.println("Invalid food item data");
+         
             
             
         }
@@ -32,4 +31,3 @@ public class FoodDatabase {
 
 
 }
-//need a bufferReader

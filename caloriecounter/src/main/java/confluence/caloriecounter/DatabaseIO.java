@@ -17,6 +17,8 @@ public class DatabaseIO {
     EatenTodayIO day = new EatenTodayIO();
     Scanner inputScanner = new Scanner(System.in);
     
+    //reads FoodDatabase.csv and looks for the line containing the search term the user says. 
+    //it splits the line into parts then prints out the nutritional information depending on how many grams they had.
     public void searchInDatabase(String searchTerm) {
         String FILE_PATH = "./resources/FoodDatabase.csv";
 
@@ -103,7 +105,7 @@ public class DatabaseIO {
     }
 
 
-
+//this is to make sure the format of the output from the previous method is readable and consistent
 private String formatOutput(String foodName, double protein, double carbs, double calories) {
     return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
 }
@@ -150,7 +152,7 @@ private String formatOutput(String foodName, double protein, double carbs, doubl
                     writer.write(foodName + "," + protein + "," + carbs + "," + calories);
                     writer.newLine();
                 } catch (IOException e) {
-                    System.out.println("nuh uh, get outta here");
+                    System.out.println("Try Again");
                 }
             }
 
