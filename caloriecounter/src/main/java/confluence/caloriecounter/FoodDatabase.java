@@ -23,11 +23,5 @@ public class FoodDatabase {
             foodDatabase.put(foodName, new FoodItemInfo(protein, carbs, calories));
            
         }
-         
-            
-            
-        }
-    
-
-
+    }
 }
