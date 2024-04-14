@@ -59,13 +59,14 @@ public int getRemainingCarbs() {
     this.proteinTarget = protein;
     this.carbsTarget = carbs;
     TargetReader.saveMacroTargets(calorieTarget, proteinTarget, carbsTarget);
-    ShowFullMacros();
-}
+     ShowFullMacros();
     
-    public void ShowFullMacros() {
-        System.out.println("calorie intake: " + consumedCalories + "/" + calorieTarget + " kcal");
-        System.out.println("crotein intake: " + consumedProtein + "/" + proteinTarget + " g");
-        System.out.println("carbs intake: " + consumedCarbs + "/" + carbsTarget + " g");
+}
+     public void ShowFullMacros() {
+        System.out.println("calorie intake: " + calorieTarget + " kcal");
+        System.out.println("protein intake: " + proteinTarget + " g");
+        System.out.println("carbs intake: " + carbsTarget + " g");
     }
+   
     
 }

@@ -18,12 +18,14 @@ public class StartMenu {
     private ExitProgram exit = new ExitProgram();
     private UpdateMacros UpdateTarget; 
     private DaySummary daySummary = new DaySummary(); 
+    private EatenTodayIO eatenToday = new EatenTodayIO();
     
     public StartMenu() {
         int[] targets = TargetReader.loadMacroTargets();
         this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
         this.inputFood = new AddAndReadFood(calorieTracker);
         this.UpdateTarget = new UpdateMacros(calorieTracker, menuScanner);
+        this.eatenToday = new EatenTodayIO();
     }
   
     public static void main(String[] args) {
@@ -31,7 +33,7 @@ public class StartMenu {
         StartMenu startMenu = new StartMenu();
         startMenu.welcomeText();
         startMenu.displayMenu();
-        
+       
     }
     public void welcomeText(){
         System.out.println("Welcome to the Calorie Counter");
@@ -46,8 +48,8 @@ public class StartMenu {
     public void menuOptions(){
             System.out.println("- open food logger (fl)");
             System.out.println("- update macro targets (mt)");
-            System.out.println("- see remaining macros (rc)");
             System.out.println("- see a motivational quote (mq)");
+            System.out.println("- clear day(cd)");
             System.out.println("- show day summary(ds)");
             System.out.println("- exit the program (x)");
             System.out.println("Enter here:");
@@ -63,17 +65,17 @@ public class StartMenu {
                 inputFood.foodReader();
                 exit.exitProgram();
                 break;
+            case "cd":
+                eatenToday.clearEatenToday();
+                exit.exitProgram();
+                break;
                 
             case "mt":
                 UpdateTarget.updateTargets();
                 exit.exitProgram();
                 break;
                 
-            case "rc":
-                calorieTracker.ShowFullMacros();
-                showRemainingMacros();
-                exit.exitProgram();
-                break;
+           
       
             case "mq":
                 System.out.println("~You must look within yourself to save yourself from your other self~");
@@ -97,11 +99,5 @@ public class StartMenu {
                 break;
         }
     }
-    public void showRemainingMacros() {
-    int remainingProtein = calorieTracker.getRemainingProtein();
-    int remainingCarbs = calorieTracker.getRemainingCarbs();
 
-    System.out.println("Remaining protein for the day: " + remainingProtein + "g");
-    System.out.println("Remaining carbs for the day: " + remainingCarbs + "g");
-}
 }

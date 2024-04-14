@@ -27,7 +27,7 @@ public class EatenTodayIO {
         } catch (IOException e) {
             System.out.println("Food not added today");
         }
-        return false; // Item not found in daily log
+        return false; 
     }
 //save  to a specific food item in the FoodEatenToday.csv file
     public void saveToDay(String foodItem) {
@@ -42,7 +42,7 @@ public class EatenTodayIO {
     }
 
     private String formatOutput(String line) {
-        // Assuming the format of each line is "food,protein,carbs,calories"
+        
         String[] parts = line.split(",");
         if (parts.length >= 4) {
             String foodName = parts[0];
@@ -51,6 +51,18 @@ public class EatenTodayIO {
             double calories = Double.parseDouble(parts[3]);
             return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
         }
-        return line; // Return original line if unable to parse
+        return line; 
+    }
+    //clear day by overwriting file with empty text
+   public void clearEatenToday() {
+        try {
+            
+            FileWriter fileWriter = new FileWriter("./resources/FoodEatenToday.csv", false);
+            fileWriter.write("");  
+            fileWriter.close();  
+            System.out.println("Food log cleared successfully.");
+        } catch (IOException e) {
+            System.out.println("Error clearing food log: " + e.getMessage());
+        }
     }
 }
