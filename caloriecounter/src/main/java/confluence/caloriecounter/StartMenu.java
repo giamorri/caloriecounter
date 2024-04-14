@@ -22,7 +22,7 @@ public class StartMenu {
     public StartMenu() {
         int[] targets = TargetReader.loadMacroTargets();
         this.calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]); 
-        this.inputFood = new AddAndReadFood(calorieTracker); // Initialize with CalorieTracker
+        this.inputFood = new AddAndReadFood(calorieTracker);
         this.UpdateTarget = new UpdateMacros(calorieTracker, menuScanner);
     }
   
@@ -58,12 +58,7 @@ public class StartMenu {
         String choice = menuScanner.nextLine();
         
         switch (choice) {
-            case "rc":
-                calorieTracker.ShowFullMacros();
-                showRemainingMacros();
-                exit.exitProgram();
-                break;
-      
+            
             case "fl":
                 inputFood.foodReader();
                 exit.exitProgram();
@@ -74,6 +69,12 @@ public class StartMenu {
                 exit.exitProgram();
                 break;
                 
+            case "rc":
+                calorieTracker.ShowFullMacros();
+                showRemainingMacros();
+                exit.exitProgram();
+                break;
+      
             case "mq":
                 System.out.println("~You must look within yourself to save yourself from your other self~");
                 System.out.println("          ~only then will your true self reveal itself~");
