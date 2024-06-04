@@ -1,7 +1,5 @@
 package confluence.caloriecounter;
 
-import java.util.Scanner;
-
 public class CalorieTracker {
     private int calorieTarget; 
     private int consumedCalories = 0;
@@ -25,7 +23,7 @@ public class CalorieTracker {
     }
     public void addCalories(int calories) {
         consumedCalories += calories;
-         System.out.println(calories + " calories added. Total consumed: " + consumedCalories);
+         System.out.println(calories + " calories added. total eaten: " + consumedCalories);
  
     }
     public void addProtein(int protein) {
@@ -40,6 +38,13 @@ public class CalorieTracker {
     public int getRemainingCalories() {
         return calorieTarget - consumedCalories;
     }
+    public int getRemainingProtein() {
+    return proteinTarget - consumedProtein;
+}
+
+public int getRemainingCarbs() {
+    return carbsTarget - consumedCarbs;
+}
     public void resetCalories() {
         consumedCalories = 0;
     }
@@ -54,14 +59,14 @@ public class CalorieTracker {
     this.proteinTarget = protein;
     this.carbsTarget = carbs;
     TargetReader.saveMacroTargets(calorieTarget, proteinTarget, carbsTarget);
-    ShowFullMacros();
-}
+     ShowFullMacros();
     
-    public void ShowFullMacros() {
-        System.out.println("Calorie intake: " + consumedCalories + "/" + calorieTarget + " kcal");
-        System.out.println("Protein intake: " + consumedProtein + "/" + proteinTarget + " g");
-        System.out.println("Carbs intake: " + consumedCarbs + "/" + carbsTarget + " g");
+}
+     public void ShowFullMacros() {
+        System.out.println("calorie intake: " + calorieTarget + " kcal");
+        System.out.println("protein intake: " + proteinTarget + " g");
+        System.out.println("carbs intake: " + carbsTarget + " g");
     }
+   
     
 }
-
