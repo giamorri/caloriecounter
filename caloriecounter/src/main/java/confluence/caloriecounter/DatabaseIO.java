@@ -1,76 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package confluence.caloriecounter;
 
-/**
- *
- * @author yash
- */
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.awt.GridLayout;
+import java.io.*;
+import javax.swing.*;
 
 public class DatabaseIO {
-    
-    EatenTodayIO day = new EatenTodayIO();
-    Scanner inputScanner = new Scanner(System.in);
-    
-//this calls the FoodDatabase class to add new food items to the FoodDatabase.csv file  
-                public void addFoodToDatabase(String foodName) {
-                try {
-                    System.out.println("enter the protein (/100g):");
-                    double protein = inputScanner.nextDouble();
-                    
-                    System.out.println("enter the carbohydrates (/100g):");
-                    double carbs = inputScanner.nextDouble();
-                    
-                    System.out.println("enter the calories (/100g):");
-                    double calories = inputScanner.nextDouble();
 
-                    
-                    FoodDatabase macroDatabase = new FoodDatabase();
-                    macroDatabase.addFoodItem(foodName, protein, carbs, calories);
-                    saveToDatabase(foodName, protein, carbs, calories);
-                    
-                    System.out.println("food item added successfully.");
-                    searchInDatabase(foodName);
-                    
-                } catch (InputMismatchException e) {
-                    System.out.println("the input must be a number. try again? (y/n)");
-                    inputScanner.nextLine();
-                    String again = inputScanner.nextLine();
-                    
-                    if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
-                        addFoodToDatabase(foodName);
-                    } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
-                        System.out.println("food item not added.");
-                    }
-                }
-            }
-            public void saveToDatabase(String foodName, double protein, double carbs, double calories) {
-                String FILE_PATH = "./resources/FoodDatabase.csv";
+    private static final String FILE_PATH = "./resources/FoodDatabase.csv";
+    private EatenTodayIO day = new EatenTodayIO();
 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-                    writer.write(foodName + "," + protein + "," + carbs + "," + calories);
-                    writer.newLine();
-                } catch (IOException e) {
-                    System.out.println("Try Again");
-                }
-            }
-    
-    //reads FoodDatabase.csv and looks for the line containing the search term the user says. 
-    //it splits the line into parts then prints out the nutritional information depending on how many grams they had.
-    public void searchInDatabase(String searchTerm) {
-        String FILE_PATH = "./resources/FoodDatabase.csv";
-
+    public void searchInDatabase(String searchTerm, double gramsEaten, FoodDatabase foodDatabase) {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-
             String line;
             boolean found = false;
 
@@ -78,84 +18,88 @@ public class DatabaseIO {
                 if (line.contains(searchTerm)) {
                     String[] parts = line.split(",");
                     if (parts.length >= 4) {
-
                         String foodName = parts[0];
                         double proteinPer100g = Double.parseDouble(parts[1]);
                         double carbsPer100g = Double.parseDouble(parts[2]);
                         double caloriesPer100g = Double.parseDouble(parts[3]);
 
-                        System.out.println("found "+foodName+" in database: \n- " + formatOutput(foodName, proteinPer100g, carbsPer100g, caloriesPer100g));
+                        showFoodFoundDialog(foodName, proteinPer100g, carbsPer100g, caloriesPer100g, gramsEaten);
                         found = true;
-
-                        try {
-                            portionInGrams(foodName, proteinPer100g, carbsPer100g, caloriesPer100g);
-                            break;
-                            
-                        } catch (InputMismatchException e) {
-                            System.out.println("the input must be a number. try again? (y/n)");
-                            inputScanner.nextLine();
-                            String again = inputScanner.nextLine();
-                    
-                            if ("yes".equalsIgnoreCase(again) || "y".equalsIgnoreCase(again)) {
-                            searchInDatabase(foodName);
-                            } else if ("no".equalsIgnoreCase(again) || "n".equalsIgnoreCase(again)) {
-                                System.out.println("food item not added.");
-                    }
-                
-                        } catch (IllegalStateException e) {
-                            System.out.println("Scanner is closed. Please restart the application.");
-                            return;
-                        }
+                        break;
                     }
                 }
             }
+
             if (!found) {
-                System.out.println(searchTerm+" not found in the database.");
-
-                System.out.println("do you want to add "+searchTerm+" to the database? (y/n)");
-                String addFood = inputScanner.nextLine().toLowerCase();
-
-                if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-                    addFoodToDatabase(searchTerm);
-                } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
-                    System.out.println("food item not added.");
+                int response = JOptionPane.showConfirmDialog(null, searchTerm + " not found in the database. Would you like to add it?", "Food Not Found", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    addNewFoodItem(searchTerm, foodDatabase);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            System.out.println("do you want to add "+searchTerm+" to the database? (y/n)");
-            String addFood = inputScanner.nextLine().toLowerCase();
-
-            if ("yes".equalsIgnoreCase(addFood) || "y".equalsIgnoreCase(addFood)) {
-                addFoodToDatabase(searchTerm);
-            } else if ("no".equalsIgnoreCase(addFood) || "n".equalsIgnoreCase(addFood)) {
-                System.out.println(searchTerm+" not added.");
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private void portionInGrams(String foodName, double proteinPer100g, double carbsPer100g, double caloriesPer100g){
-        
-        double gramsEaten;
-        
-        System.out.println("How much of this (in grams) did you have?");
-        gramsEaten = inputScanner.nextDouble();
-        
+
+    private void showFoodFoundDialog(String foodName, double proteinPer100g, double carbsPer100g, double caloriesPer100g, double gramsEaten) {
         double protein = (proteinPer100g * gramsEaten) / 100;
         double carbs = (carbsPer100g * gramsEaten) / 100;
         double calories = (caloriesPer100g * gramsEaten) / 100;
 
-        System.out.println("changed macros based on " + gramsEaten + " grams eaten:");
-        System.out.println("protein: " + protein + "g");
-        System.out.println("carbs: " + carbs + "g");
-        System.out.println("calories: " + calories + "kcal");
+        StringBuilder message = new StringBuilder();
+        message.append("Found ").append(foodName).append(" in database:\n")
+               .append(formatOutput(foodName, proteinPer100g, carbsPer100g, caloriesPer100g))
+               .append("\n\nChanged macros based on ").append(gramsEaten).append(" grams eaten:\n")
+               .append("Protein: ").append(protein).append("g\n")
+               .append("Carbs: ").append(carbs).append("g\n")
+               .append("Calories: ").append(calories).append("kcal");
 
+        JOptionPane.showMessageDialog(null, message.toString(), "Food Found", JOptionPane.INFORMATION_MESSAGE);
         day.saveToDay(foodName + "," + protein + "," + carbs + "," + calories);
     }
 
-
-//this is to make sure the format of the output from the previous method is readable and consistent
-private String formatOutput(String foodName, double protein, double carbs, double calories) {
-    return foodName + "\n- protein: " + protein + "g\n- carbs: " + carbs + "g\n- calories: " + calories + "kcal";
-}
-
-
+    public static void saveToDatabase(String foodName, double protein, double carbs, double calories) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            writer.write(foodName + "," + protein + "," + carbs + "," + calories);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void addNewFoodItem(String foodName, FoodDatabase foodDatabase) {
+        JTextField proteinField = new JTextField();
+        JTextField carbsField = new JTextField();
+        JTextField caloriesField = new JTextField();
+
+        JPanel panel = new JPanel(new GridLayout(4, 2));
+        panel.add(new JLabel("Protein (/100g):"));
+        panel.add(proteinField);
+        panel.add(new JLabel("Carbs (/100g):"));
+        panel.add(carbsField);
+        panel.add(new JLabel("Calories (/100g):"));
+        panel.add(caloriesField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Enter Macros for " + foodName, JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                double protein = Double.parseDouble(proteinField.getText());
+                double carbs = Double.parseDouble(carbsField.getText());
+                double calories = Double.parseDouble(caloriesField.getText());
+                foodDatabase.addFoodItem(foodName, protein, carbs, calories);
+
+                StringBuilder message = new StringBuilder();
+                message.append("Added ").append(foodName).append(" to the database with macros:\n")
+                       .append(formatOutput(foodName, protein, carbs, calories));
+
+                JOptionPane.showMessageDialog(null, message.toString(), "Food Added", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter valid numbers for the macros.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private String formatOutput(String foodName, double protein, double carbs, double calories) {
+        return foodName + "\n- Protein: " + protein + "g\n- Carbs: " + carbs + "g\n- Calories: " + calories + "kcal";
+    }
+}

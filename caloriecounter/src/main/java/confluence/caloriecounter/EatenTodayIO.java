@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 public class EatenTodayIO {
-//search for a specific food item in the FoodEatenToday.csv file
+//search for a food item in the FoodEatenToday.csv file
     public boolean searchInDay(String foodItem) {
         String FILE_PATH = "./resources/FoodEatenToday.csv";
 
@@ -29,7 +29,7 @@ public class EatenTodayIO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Food not added today");
+            System.out.println("Food not added");
         }
         return false; 
     }
