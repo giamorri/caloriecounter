@@ -60,7 +60,13 @@ public class DaySummaryGUI extends JFrame {
         readFoodData("./resources/FoodEatenToday.csv");
         displayDaySummary();
     }
+public Map<String, Map<String, Double>> getFoodItems() {
+    return foodItems;
+}
 
+public Map<String, Double> getTotalMacros() {
+    return totalMacros;
+}
     // Reads data from FoodEatenToday.csv
     public void readFoodData(String filePath) {
         File file = new File(filePath);

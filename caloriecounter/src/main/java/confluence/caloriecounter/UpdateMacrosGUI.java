@@ -22,12 +22,16 @@ public class UpdateMacrosGUI extends JFrame {
     private JButton cancelButton;
     public UpdateMacrosGUI(CalorieTracker calorieTracker) {
         this.calorieTracker = calorieTracker;
-        // Initialize the frame
+        
+        
+        
         setTitle("Update Macro Targets");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(5, 2, 10, 10));
-        // Initialize components
+        
+        
+        
         JLabel caloriesLabel = new JLabel("Calories:");
         caloriesField = new JTextField(String.valueOf(calorieTracker.getCalorieTarget()));
         JLabel proteinLabel = new JLabel("Protein (g):");
@@ -36,6 +40,8 @@ public class UpdateMacrosGUI extends JFrame {
         carbsField = new JTextField(String.valueOf(calorieTracker.getRemainingCarbs()));
         updateButton = new JButton("Update");
         cancelButton = new JButton("Cancel");
+        
+        
         // added buttons to the frame
         add(caloriesLabel);
         add(caloriesField);
@@ -46,18 +52,12 @@ public class UpdateMacrosGUI extends JFrame {
         add(updateButton);
         add(cancelButton);
 
-        // Add action listeners to the buttons
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateTargets();
-            }
+        // added action listeners to the buttons
+        updateButton.addActionListener((ActionEvent e) -> {
+            updateTargets();
         });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            dispose();
         });
         setVisible(true);
     }
