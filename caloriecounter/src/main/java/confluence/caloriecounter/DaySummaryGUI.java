@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DaySummaryGUI extends JFrame {
+public final class DaySummaryGUI extends JFrame {
+
+    private static final long serialVersionUID = 1L;
 
     private JTextArea summaryArea;
     private JLabel wellDoneLabel;

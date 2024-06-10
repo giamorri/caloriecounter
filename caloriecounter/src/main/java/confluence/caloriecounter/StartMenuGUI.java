@@ -85,7 +85,8 @@ public class StartMenuGUI extends JFrame {
     //i had to initialise the different options here, please see if theres a better way to implement
     //pls re add FOodLoggerGUIv2  and initialise it here
     private void openFoodLogger() {
-       
+       AddAndReadFood addAndReadFood = new AddAndReadFood(new CalorieTracker(2000,50,150));
+       new FoodLoggerGUI(addAndReadFood).setVisible(true);
     }
     
 

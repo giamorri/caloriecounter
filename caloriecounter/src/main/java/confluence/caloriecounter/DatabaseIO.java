@@ -37,7 +37,6 @@ public class DatabaseIO {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -63,7 +62,6 @@ public class DatabaseIO {
             writer.write(foodName + "," + protein + "," + carbs + "," + calories);
             writer.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
