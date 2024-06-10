@@ -4,10 +4,10 @@ import javax.swing.*;
 
 public class AddAndReadFood {
 
-    private DatabaseIO dataIO = new DatabaseIO();
-    private EatenTodayManager eatenTodayManager = new EatenTodayManager();
-    private CalorieTracker calorieTracker;
-    private FoodDatabase foodDatabase = new FoodDatabase();
+     DatabaseIO dataIO = new DatabaseIO();
+     EatenTodayManager eatenTodayManager = new EatenTodayManager();
+     CalorieTracker calorieTracker;
+     FoodDatabase foodDatabase = new FoodDatabase();
 
     public AddAndReadFood(CalorieTracker tracker) {
         this.calorieTracker = tracker;

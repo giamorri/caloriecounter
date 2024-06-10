@@ -17,11 +17,11 @@ public class FoodLoggerGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     
-    private JTextField foodNameField;
-    private JTextField gramsField;
-    private JButton addButton;
+     JTextField foodNameField;
+     JTextField gramsField;
+     JButton addButton;
     
-    private AddAndReadFood addAndReadFood;
+     AddAndReadFood addAndReadFood;
     
     FoodLoggerGUI(AddAndReadFood addAndReadFood){
         this.addAndReadFood = addAndReadFood;

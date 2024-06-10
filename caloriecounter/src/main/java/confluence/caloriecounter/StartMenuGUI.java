@@ -7,18 +7,18 @@ import java.awt.event.ActionListener;
 
 public class StartMenuGUI extends JFrame {
 
-    private JButton foodLoggerButton;
-    private JButton updateMacrosButton;
-    private JButton motivationalQuoteButton;
-    private JButton clearDayButton;
-    private JButton daySummaryButton;
-    private JButton exitButton;
+     JButton foodLoggerButton;
+     JButton updateMacrosButton;
+     JButton motivationalQuoteButton;
+     JButton clearDayButton;
+     JButton daySummaryButton;
+     JButton exitButton;
 
-    private CalorieTracker calorieTracker;
-    private AddAndReadFood inputFood;
+     CalorieTracker calorieTracker;
+     AddAndReadFood inputFood;
   
-    private EatenTodayIO eatenToday;
-    private ExitProgram exit;
+     EatenTodayIO eatenToday;
+     ExitProgram exit;
 
     public StartMenuGUI() {
         

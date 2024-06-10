@@ -14,12 +14,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class UpdateMacrosGUI extends JFrame {
-    private CalorieTracker calorieTracker;
-    private JTextField caloriesField;
-    private JTextField proteinField;
-    private JTextField carbsField;
-    private JButton updateButton;
-    private JButton cancelButton;
+     CalorieTracker calorieTracker;
+     JTextField caloriesField;
+     JTextField proteinField;
+     JTextField carbsField;
+     JButton updateButton;
+     JButton cancelButton;
     public UpdateMacrosGUI(CalorieTracker calorieTracker) {
         this.calorieTracker = calorieTracker;
         
