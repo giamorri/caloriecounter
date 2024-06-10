@@ -50,11 +50,8 @@ public class StartMenuGUI extends JFrame {
         add(exitButton);
 
         // Add action listener to the buttons, might be useful combining it in one and calling it can you try that yash
-        foodLoggerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-openFoodLogger();
-            }
+        foodLoggerButton.addActionListener((ActionEvent e) -> {
+            openFoodLogger();
         });
 
         updateMacrosButton.addActionListener((ActionEvent e) -> {
@@ -87,7 +84,8 @@ openFoodLogger();
     
     //i had to initialise the different options here, please see if theres a simpler way to implement
     private void openFoodLogger() {
-       
+       AddAndReadFood addAndReadFood = new AddAndReadFood(new CalorieTracker(2000,50,150));
+       new FoodLoggerGUI(addAndReadFood).setVisible(true);
     }
     
 
