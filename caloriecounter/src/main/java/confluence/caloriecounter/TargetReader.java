@@ -2,49 +2,49 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package confluence.caloriecounter;
+package confluential;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-/**
- *
- * @author Taj
- */
 public class TargetReader {
-    private static final String FILE_NAME = "./resources/MacroTargets.csv";  
- 
     public static void saveMacroTargets(int calorieTarget, int proteinTarget, int carbsTarget) {
-        try (FileWriter fileWriter = new FileWriter(FILE_NAME, false)) {
-            fileWriter.append("Calories,Protein,Carbs\n");
-            fileWriter.append(String.valueOf(calorieTarget)).append(",");
-            fileWriter.append(String.valueOf(proteinTarget)).append(",");
-            fileWriter.append(String.valueOf(carbsTarget)).append("\n");
-            fileWriter.flush();
-        } catch (IOException e) {
-            System.out.println("Try Again! check the commas between values are present. ");
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("UPDATE MacroTargets SET target_calories = ?, target_protein = ?, target_carbs = ?")) {
+            pstmt.setInt(1, calorieTarget);
+            pstmt.setInt(2, proteinTarget);
+            pstmt.setInt(3, carbsTarget);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Macro targets saved successfully.");
+            } else {
+                System.out.println("Failed to save macro targets.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error saving macro targets: " + e.getMessage());
         }
     }
 
     public static int[] loadMacroTargets() {
-        File file = new File(FILE_NAME);
-        if (file.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                reader.readLine(); 
-                String line = reader.readLine();
-                if (line != null) {
-                    String[] values = line.split(",");
-                    return new int[]{ Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]) };
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM MacroTargets")) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int calorieTarget = rs.getInt("target_calories");
+                    int proteinTarget = rs.getInt("target_protein");
+                    int carbsTarget = rs.getInt("target_carbs");
+                    return new int[]{calorieTarget, proteinTarget, carbsTarget};
                 }
-            } catch (IOException | NumberFormatException e) {
-                System.out.println("Check the formatting and try again ");
             }
+        } catch (SQLException e) {
+            System.out.println("Error loading macro targets: " + e.getMessage());
         }
-        
-        return new int[]{ 2000, 150, 300 };
+
+        return new int[]{2000, 150, 300}; // Default values
     }
 }
+
 

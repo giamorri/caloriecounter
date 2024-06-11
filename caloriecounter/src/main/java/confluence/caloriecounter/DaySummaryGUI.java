@@ -2,18 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package confluence.caloriecounter;
+package confluential;
 
-/**
- *
- * @author giamorri
- */
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +22,7 @@ public final class DaySummaryGUI extends JFrame {
     private JLabel wellDoneLabel;
     private Map<String, Map<String, Double>> foodItems;
     private Map<String, Double> totalMacros;
+    private JButton cancelButton;
 
     public DaySummaryGUI() {
         foodItems = new HashMap<>();
@@ -33,6 +31,7 @@ public final class DaySummaryGUI extends JFrame {
         totalMacros.put("Protein", 0.0);
         totalMacros.put("Carbs", 0.0);
 
+        
         // Initialize the frame
         setTitle("Day Summary");
         setSize(500, 400);
@@ -50,42 +49,46 @@ public final class DaySummaryGUI extends JFrame {
         wellDoneLabel.setForeground(Color.GREEN);
         wellDoneLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener((ActionEvent e) -> dispose());
+
         // Panel for summary and message
-        JPanel summaryPanel = new JPanel();
-        summaryPanel.setLayout(new BorderLayout(10, 10));
+        JPanel summaryPanel = new JPanel(new BorderLayout(10, 10));
         summaryPanel.add(wellDoneLabel, BorderLayout.NORTH);
         summaryPanel.add(new JScrollPane(summaryArea), BorderLayout.CENTER);
 
+        // Panel for the cancel button
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(cancelButton);
+
+        // Add panels to frame
         add(summaryPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         // Read and display the food data
-        readFoodData("./resources/FoodEatenToday.csv");
+        readFoodData();
         displayDaySummary();
     }
 
-    // Reads data from FoodEatenToday.csv
-    public void readFoodData(String filePath) {
-        File file = new File(filePath);
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                processLine(line);
+    public void readFoodData() {
+        try (Connection conn = DatabaseManager.getConnection(); 
+             Statement stmt = conn.createStatement()) {
+            String query = "SELECT f.name, f.calories, f.protein, f.carbs FROM FoodEatenToday e JOIN FoodDatabase f ON e.food_id = f.id";
+            try (ResultSet rs = stmt.executeQuery(query)) {
+                while (rs.next()) {
+                    String foodName = rs.getString("name");
+                    double calories = rs.getDouble("calories");
+                    double protein = rs.getDouble("protein");
+                    double carbs = rs.getDouble("carbs");
+                    processLine(foodName, calories, protein, carbs);
+                }
             }
-        } catch (IOException | NumberFormatException e) {
-            summaryArea.append("No food added yet!\n");
+        } catch (SQLException e) {
+            summaryArea.append("Error reading from database: " + e.getMessage() + "\n");
         }
     }
 
-    // Processes each line of the CSV and updates the food items and total macros
-    private void processLine(String line) {
-        String[] parts = line.split(",");
-
-        String foodName = parts[0];
-        double calories = Double.parseDouble(parts[1]);
-        double protein = Double.parseDouble(parts[2]);
-        double carbs = Double.parseDouble(parts[3]);
-
+    private void processLine(String foodName, double calories, double protein, double carbs) {
         Map<String, Double> macros = new HashMap<>();
         macros.put("Calories", calories);
         macros.put("Protein", protein);
@@ -97,17 +100,22 @@ public final class DaySummaryGUI extends JFrame {
         totalMacros.put("Carbs", totalMacros.get("Carbs") + carbs);
     }
 
-    // Displays the day summary in the JTextArea
     public void displayDaySummary() {
+        StringBuilder summary = new StringBuilder();
         for (Map.Entry<String, Map<String, Double>> entry : foodItems.entrySet()) {
-            summaryArea.append(entry.getKey() + ", Calories: " + entry.getValue().get("Calories") + ", Protein: " + entry.getValue().get("Protein") + ", Carbs: " + entry.getValue().get("Carbs") + "\n");
+            summary.append(entry.getKey())
+                   .append(", Calories: ").append(entry.getValue().get("Calories"))
+                   .append(", Protein: ").append(entry.getValue().get("Protein"))
+                   .append(", Carbs: ").append(entry.getValue().get("Carbs"))
+                   .append("\n");
         }
-        summaryArea.append("\nTotal: Calories: " + totalMacros.get("Calories") + ", Protein: " + totalMacros.get("Protein") + ", Carbs: " + totalMacros.get("Carbs") + "\n");
+        summary.append("Total: Calories: ").append(totalMacros.get("Calories"))
+               .append(", Protein: ").append(totalMacros.get("Protein"))
+               .append(", Carbs: ").append(totalMacros.get("Carbs"))
+               .append("\n");
+
+        summaryArea.setText(summary.toString());
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new DaySummaryGUI().setVisible(true);
-        });
-    }
+
 }

@@ -1,4 +1,4 @@
-package confluence.caloriecounter;
+package confluential;
 
 import javax.swing.*;
 
@@ -7,7 +7,6 @@ public class AddAndReadFood {
     private DatabaseIO dataIO = new DatabaseIO();
     private EatenTodayManager eatenTodayManager = new EatenTodayManager();
     private CalorieTracker calorieTracker;
-    private FoodDatabase foodDatabase = new FoodDatabase();
 
     public AddAndReadFood(CalorieTracker tracker) {
         this.calorieTracker = tracker;
@@ -21,10 +20,10 @@ public class AddAndReadFood {
         JOptionPane.showMessageDialog(null, "Added " + foodName + " with " + calories + " calories, " + protein + "g of protein, " + carbs + "g of carbs.", "Food Added", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void foodReader(String foodName, double grams) {
+    public void foodReader(String foodName) {
         boolean foundInDay = eatenTodayManager.searchInDay(foodName);
         if (!foundInDay) {
-            dataIO.searchInDatabase(foodName, grams, foodDatabase);
+            dataIO.searchInDatabase(foodName);
         }
     }
 }

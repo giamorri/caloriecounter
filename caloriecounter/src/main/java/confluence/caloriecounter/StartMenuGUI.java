@@ -1,4 +1,4 @@
-package confluence.caloriecounter;
+package confluential;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartMenuGUI extends JFrame {
+
+    private static final long serialVersionUID = 1L;
 
     private JButton foodLoggerButton;
     private JButton updateMacrosButton;
@@ -16,9 +18,17 @@ public class StartMenuGUI extends JFrame {
 
     private CalorieTracker calorieTracker;
     private AddAndReadFood inputFood;
-  
-    private EatenTodayIO eatenToday;
-    private ExitProgram exit;
+    private EatenTodayManager eatenToday;
+    
+    
+    public static void main(String[] args) {
+        
+            DatabaseManager databaseManager = new DatabaseManager();
+            StartMenuGUI startMenuGUI = new StartMenuGUI();
+            
+        // start everything
+        
+    }
 
     public StartMenuGUI() {
         // Initialize the frame
@@ -30,8 +40,8 @@ public class StartMenuGUI extends JFrame {
         int[] targets = TargetReader.loadMacroTargets();
         calorieTracker = new CalorieTracker(targets[0], targets[1], targets[2]);
         inputFood = new AddAndReadFood(calorieTracker);
-        eatenToday = new EatenTodayIO();
-        exit = new ExitProgram();
+        eatenToday = new EatenTodayManager();
+        
 
         
         foodLoggerButton = new JButton("Open Food Logger");
@@ -47,7 +57,7 @@ public class StartMenuGUI extends JFrame {
         add(motivationalQuoteButton);
         add(clearDayButton);
         add(daySummaryButton);
-        add(exitButton);
+        
 
         // Add action listener to the buttons, might be useful combining it in one and calling it can you try that yash
         foodLoggerButton.addActionListener((ActionEvent e) -> {
@@ -57,14 +67,15 @@ public class StartMenuGUI extends JFrame {
         updateMacrosButton.addActionListener((ActionEvent e) -> {
             updateMacros();
         });
-// need to add more quotes
+        // need to add more quotes -> added heaps of quotes in the MotivationalQuotes class
         motivationalQuoteButton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(StartMenuGUI.this, "~You must look within yourself to save yourself from your other self~\n~only then will your true self reveal itself~");
-            
+        String randomQuote = MotivationalQuote.getRandomQuote();
+        JOptionPane.showMessageDialog(StartMenuGUI.this, randomQuote);
         });
+
         clearDayButton.addActionListener((ActionEvent e) -> {
             eatenToday.clearEatenToday();
-            exit.exitProgram();
+            
             
         });
         daySummaryButton.addActionListener(new ActionListener() {
@@ -89,19 +100,10 @@ public class StartMenuGUI extends JFrame {
     }
     
 
-    private void showDaySummary() {
-        new DaySummaryGUI().setVisible(true);
-    }
+
     
     private void updateMacros(){
         
         new UpdateMacrosGUI(calorieTracker).setVisible(true);
-    }
-    
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            StartMenuGUI startMenuGUI = new StartMenuGUI(); // start everything
-        });
-    }
+    }    
 }
