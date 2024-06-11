@@ -1,3 +1,0 @@
-egg 3.0(g)/100g 5.0(g)/100g 6.0kcal/100g
-milk 3.0(g)/100g 7.0(g)/100g 8.0kcal/100g
-bubble tea 54.0(g)/100g 43.0(g)/100g 2.0kcal/100g
