@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 import java.awt.GridLayout;
 import java.sql.Connection;

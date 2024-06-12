@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 public class CalorieTracker {
     private int calorieTarget;

@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

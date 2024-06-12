@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +57,7 @@ public class StartMenuGUI extends JFrame {
         add(motivationalQuoteButton);
         add(clearDayButton);
         add(daySummaryButton);
+        add(exitButton);
         
 
         // Add action listener to the buttons, might be useful combining it in one and calling it can you try that yash
@@ -103,6 +104,7 @@ public class StartMenuGUI extends JFrame {
 
     
     private void updateMacros(){
+        
         
         new UpdateMacrosGUI(calorieTracker).setVisible(true);
     }    

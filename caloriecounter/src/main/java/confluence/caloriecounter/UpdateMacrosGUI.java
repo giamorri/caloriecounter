@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 import javax.swing.*;
 import java.awt.*;

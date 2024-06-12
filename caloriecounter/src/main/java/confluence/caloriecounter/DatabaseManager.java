@@ -1,4 +1,4 @@
-package confluential;
+package confluence.caloriecounter;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -9,9 +9,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:derby://localhost:1527/CalorieCounter;create=true";
-    private static final String USER = "pdc";
-    private static final String PASSWORD = "pdc";
+    private static final String DB_URL = "jdbc:derby:memory:CalorieCounter;create=true";
 
 public static void main(String[] args) {
         try (Connection conn = getConnection()) {
@@ -20,15 +18,17 @@ public static void main(String[] args) {
                 createTablesIfNotExist(conn);
             }
         } catch (SQLException e) {
-            System.out.println("Error connecting to database: " + e.getMessage());
+            System.out.println("Error for connecting to database: " + e.getMessage());
         }
 }
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(DB_URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error connecting to database: " + e.getMessage(),
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            return DriverManager.getConnection(DB_URL);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("errorrr"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error bout connecting to database: " + e.getMessage(),
                     "Database Connection Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
